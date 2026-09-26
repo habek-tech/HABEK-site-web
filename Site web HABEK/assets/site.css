@@ -87,7 +87,7 @@
   }
   .btn-primary { background: var(--brand-bronze); color: var(--surface); }
   .btn-primary:hover { background: #755a2c; }
-  .btn-ghost { color: var(--ink); border-color: var(--neutral-sable); }
+  .btn-ghost { color: var(--ink); border-color: var(--neutral-gris-chaud); }
   .btn-ghost:hover { background: var(--neutral-sable); }
   .btn-on-dark { background: var(--surface); color: var(--brand-indigo); }
   .btn-on-dark:hover { background: var(--neutral-sable); }
@@ -96,6 +96,7 @@
   header {
     position: sticky; top: 0; z-index: 10;
     background: rgba(251, 247, 240, 0.92);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--neutral-sable);
   }
@@ -103,16 +104,16 @@
     display: flex; align-items: center; justify-content: space-between;
     padding-top: var(--space-3); padding-bottom: var(--space-3);
   }
-  .logo { display: flex; align-items: center; gap: var(--space-2); }
+  .logo { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
   .logo img { width: auto; height: 34px; }
   .logo span { font-family: var(--font-display); font-weight: 600; font-size: 20px; color: var(--ink); }
-  nav.links { display: flex; gap: var(--space-4); align-items: center; }
-  nav.links a { color: var(--ink); font-size: 14px; font-weight: 500; }
+  nav.links { display: flex; gap: 24px; align-items: center; }
+  nav.links a { color: var(--ink); font-size: 14px; font-weight: 500; white-space: nowrap; }
   nav.links a:hover { text-decoration: none; color: var(--brand-bronze); }
 
   .menu-toggle {
     display: none; background: none; border: none; cursor: pointer;
-    width: 40px; height: 40px; align-items: center; justify-content: center;
+    width: 44px; height: 44px; align-items: center; justify-content: center;
     border-radius: var(--radius-sm); color: var(--ink); padding: 0;
   }
   .menu-toggle:hover { background: var(--neutral-sable); }
@@ -128,11 +129,11 @@
   .mobile-panel a.btn { align-self: flex-start; }
   .mobile-social { display: flex; gap: var(--space-3); margin-top: var(--space-2); }
 
-  @media (max-width: 720px) {
+  @media (max-width: 900px) {
     nav.links { display: none; }
     .menu-toggle { display: flex; }
   }
-  @media (min-width: 721px) {
+  @media (min-width: 901px) {
     .mobile-panel { display: none !important; }
   }
 
@@ -163,14 +164,12 @@
     display: flex; flex-direction: row; gap: var(--space-4); align-items: center;
   }
   .solution-card-text { flex: 1 1 340px; display: flex; flex-direction: column; gap: var(--space-3); }
-  .solution-card-visual { flex: 0 0 330px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .solution-card-visual svg { width: 100%; height: auto; max-width: 330px; }
-  .solution-card-visual text { font-family: var(--font-sans); }
+  .solution-card-visual { flex: 0 0 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
   @media (max-width: 720px) {
     .solution-card { flex-direction: column-reverse; }
-    .solution-card-visual { flex: none; width: 100%; max-width: 330px; }
+    .solution-card-visual { flex: none; width: 100%; max-width: 380px; }
   }
-  .visual-caption { font-size: 11px; color: var(--surface); opacity: 0.75; text-align: center; margin-top: var(--space-2); }
+  .visual-caption { font-size: 12px; color: var(--surface); opacity: 0.75; text-align: center; margin-top: var(--space-2); }
   .solution-card h3 { color: var(--surface); font-size: 28px; line-height: 34px; }
   .solution-card p { color: var(--surface); opacity: 0.92; max-width: 560px; }
   .status-pill {
@@ -294,9 +293,7 @@
     details.faq-item summary::after { transition: none; }
   }
 
-  /* Comment ça marche */
-  .how { margin-top: 64px; }
-  .how-title { font-size: 22px; line-height: 30px; }
+  /* Étapes (page Scolo) */
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); counter-reset: step; }
   .steps li { counter-increment: step; border-top: 1px solid var(--neutral-sable); padding-top: var(--space-3); }
   .steps li::before {
@@ -363,3 +360,134 @@
   @media (max-width: 1240px) { .contact-art { display: none; } }
 
   @media (prefers-reduced-motion: reduce) { .approche-item { transition: none; } }
+
+  /* ===== Page produit Scolo ===== */
+  nav.links a[aria-current="page"] { color: var(--brand-bronze); }
+  .product-hero { padding-top: 72px; padding-bottom: 72px; }
+  .product-hero .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+  .hero .hero-meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-3); }
+  .hero .hero-meta .caption { margin: 0; }
+  .hero-link { display: inline-block; margin-top: var(--space-3); font-size: 14px; font-weight: 500; }
+  .product-visual { background: var(--brand-indigo); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-3); }
+  @media (max-width: 860px) {
+    .product-hero { padding-top: 48px; padding-bottom: 48px; }
+    .product-hero .hero-grid { grid-template-columns: 1fr; gap: var(--space-4); }
+  }
+  .problem-grid .approche-item p { font-size: 15px; line-height: 23px; }
+  .offer-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .check-list { list-style: none; margin: 0; padding: 0; }
+  .check-list li { position: relative; padding-left: 32px; margin-bottom: var(--space-3); font-size: 16px; line-height: 24px; }
+  .check-list li::before { content: ""; position: absolute; left: 7px; top: 4px; width: 7px; height: 13px; border: solid var(--accent-sauge); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+  .note-card { background: #fff; border: 1px solid var(--neutral-sable); border-left: 3px solid var(--accent-ocre); border-radius: var(--radius-md); padding: var(--space-4); }
+  .note-card h3 { font-size: 19px; line-height: 26px; margin-bottom: var(--space-2); }
+  .note-card p { font-size: 15px; line-height: 23px; }
+  .note-card p:last-child { margin-bottom: 0; }
+  @media (max-width: 800px) { .offer-grid { grid-template-columns: 1fr; gap: var(--space-4); } }
+
+  /* ===== Formulaire de demande de démo ===== */
+  .demo-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 48px; align-items: start; }
+  .demo-intro .body-lg { margin-bottom: var(--space-3); }
+  .demo-points { list-style: none; margin: 0 0 var(--space-4); padding: 0; }
+  .demo-points li { position: relative; padding-left: 26px; margin-bottom: var(--space-2); font-size: 14px; line-height: 21px; opacity: 0.9; }
+  .demo-points li::before { content: ""; position: absolute; left: 4px; top: 5px; width: 6px; height: 11px; border: solid var(--accent-ocre); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .demo-form { background: var(--surface); color: var(--ink); border-radius: var(--radius-lg); padding: var(--space-4); }
+  .field { margin: 0 0 var(--space-3); padding: 0; border: 0; min-width: 0; }
+  .field label, .field legend { display: block; font-weight: 600; font-size: 14px; line-height: 20px; margin-bottom: 6px; padding: 0; }
+  .field .hint { font-weight: 400; color: var(--text-muted); }
+  .field input[type="text"], .field select {
+    width: 100%; min-height: 46px; padding: 10px 14px;
+    font-family: inherit; font-size: 15px; color: var(--ink);
+    background: #fff; border: 1px solid var(--neutral-gris-chaud); border-radius: var(--radius-md);
+  }
+  .field input[type="text"]:focus, .field select:focus { outline: 3px solid var(--indigo-clair); outline-offset: 1px; border-color: var(--indigo-clair); }
+  .choices { display: flex; flex-wrap: wrap; gap: 0 20px; }
+  .choice { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; font-weight: 400; margin: 0; cursor: pointer; }
+  .choice input { width: 20px; height: 20px; margin: 0; accent-color: var(--brand-bronze); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; gap: 0; } .demo-form { padding: var(--space-3); } }
+  .demo-form .btn { width: 100%; justify-content: center; cursor: pointer; font-size: 16px; }
+  .form-note, .form-status { font-size: 13px; line-height: 19px; color: var(--text-muted); margin: var(--space-3) 0 0; }
+  .form-status a { text-decoration: underline; }
+  @media (max-width: 860px) { .demo-grid { grid-template-columns: 1fr; gap: var(--space-4); } }
+
+  .section-more { margin: var(--space-4) 0 0; font-size: 15px; font-weight: 500; }
+
+  .section-head p { margin: var(--space-2) 0 0; color: var(--text-muted); font-size: 15px; }
+  .custom-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .custom-grid .body-lg { margin-bottom: var(--space-4); max-width: 520px; }
+  .custom-cards { display: grid; gap: var(--space-3); }
+  @media (max-width: 800px) { .custom-grid { grid-template-columns: 1fr; gap: var(--space-4); } }
+
+  /* ===== Confort tactile (zones ≥ 44 px) ===== */
+  nav.links a:not(.btn) { padding: 11px 0; }
+  .mobile-panel { gap: 0; padding-top: var(--space-2); }
+  .mobile-panel a:not(.btn) { display: flex; align-items: center; min-height: 44px; }
+  .mobile-panel a.btn { margin: var(--space-3) 0 var(--space-2); }
+  .mobile-social { gap: var(--space-1); margin-top: var(--space-2); }
+  .mobile-social a { justify-content: center; width: 44px; }
+  .footer-social { gap: var(--space-1); }
+  .footer-social a { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; }
+  .footer-legal a { display: inline-flex; align-items: center; min-height: 44px; }
+  .social-link { min-height: 44px; }
+  .hero-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-2); }
+
+  /* ===== Accueil : démarche (vision) et motif compact mobile ===== */
+  .principles { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+  .principles li { border-top: 2px solid var(--accent-ocre); padding-top: var(--space-3); }
+  .principles h3 { font-size: 19px; line-height: 26px; margin-bottom: var(--space-1); }
+  .principles p { margin: 0; font-size: 15px; line-height: 23px; }
+  @media (max-width: 640px) { .principles { grid-template-columns: 1fr; gap: var(--space-3); } }
+  .hero-art-compact { display: none; }
+  @media (max-width: 860px) {
+    .hero-art-compact { display: block; margin-top: var(--space-2); }
+    .hero-art-compact svg { width: 100%; max-width: 320px; height: auto; }
+  }
+
+  /* ===== Mouvement discret (F-17) : uniquement si l'utilisateur ne demande pas de réduire les animations ===== */
+  nav.links a.nav-link[aria-current="location"] { color: var(--brand-bronze); }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn { transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
+    nav.links a, .footer-legal a, .social-link { transition: color 0.15s ease, background-color 0.15s ease; }
+    /* Apparition à l'entrée dans l'écran : CSS pur, sans effet là où non pris en charge (le contenu reste visible) */
+    @supports (animation-timeline: view()) {
+      @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+      @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      .section-head, .approche-item, .principles li, .steps li, .note-card, .proof {
+        animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 40%;
+      }
+      .steps li { position: relative; }
+      .steps li::after {
+        content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--accent-ocre);
+        transform-origin: left; animation: grow linear both; animation-timeline: view(); animation-range: entry 10% entry 90%;
+      }
+    }
+  }
+
+  /* ===== Témoignage (F-19) — affiché seulement si activé dans site.config.json ===== */
+  .proof { margin: 0; max-width: 760px; }
+  .proof blockquote { margin: 0 0 var(--space-3); padding-left: var(--space-3); border-left: 3px solid var(--accent-ocre); font-family: var(--font-display); font-weight: 500; font-size: 24px; line-height: 35px; }
+  .proof figcaption { font-size: 15px; line-height: 23px; color: var(--text-muted); }
+  .proof-results { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); }
+  .proof-results li { border-top: 2px solid var(--accent-ocre); padding-top: var(--space-2); font-size: 14px; line-height: 21px; }
+  .proof-value { display: block; font-family: var(--font-display); font-weight: 600; font-size: 32px; line-height: 40px; color: var(--brand-bronze); }
+  @media (max-width: 640px) { .proof blockquote { font-size: 20px; line-height: 30px; } }
+
+  .hero-links { display: flex; flex-wrap: wrap; column-gap: var(--space-4); }
+
+  /* ===== Démo interactive (iframe chargée au clic) ===== */
+  .live-demo { border-radius: var(--radius-lg); overflow: hidden; background: var(--brand-indigo); color: var(--surface); }
+  .live-demo-launch { padding: var(--space-4); display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--space-4); row-gap: var(--space-2); }
+  .live-demo-launch .body-sm { flex-basis: 100%; margin: var(--space-2) 0 0; color: rgba(251, 247, 240, 0.8); }
+  .live-demo .hero-link { color: var(--surface); text-decoration: underline; margin: 0; }
+  .live-demo-frame { display: block; width: 100%; height: min(720px, 80vh); border: 0; background: #f3eee4; }
+  .live-demo-note { margin: 0; padding: 4px var(--space-3); font-size: 13px; color: rgba(251, 247, 240, 0.85); }
+  .live-demo-note a { color: var(--surface); text-decoration: underline; display: inline-flex; align-items: center; min-height: 44px; }
+
+  /* ===== Captures de la démo (hero de la page Scolo, carte de l'accueil) ===== */
+  .scolo-shots { margin: 0 auto; max-width: 440px; }
+  .shots-stage { position: relative; padding-bottom: 36px; }
+  .shots-desktop { border-radius: var(--radius-md); overflow: hidden; border: 3px solid var(--indigo-clair); background: #10213a; }
+  .shots-desktop img { display: block; width: 100%; height: auto; }
+  .shots-phone { position: absolute; right: -6px; bottom: 0; width: 30%; border-radius: 16px; overflow: hidden; border: 4px solid var(--indigo-clair); background: #10213a; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); }
+  .shots-phone img { display: block; width: 100%; height: auto; }
+  .scolo-shots .visual-caption { margin-top: var(--space-1); }

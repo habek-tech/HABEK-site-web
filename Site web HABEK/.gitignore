@@ -1,0 +1,8 @@
+# Documents internes : ne pas publier (avec un déploiement Git, tout fichier du dépôt devient accessible sur le site)
+SITE_AUDIT.md
+
+# Divers
+node_modules/
+*.log
+Thumbs.db
+.DS_Store

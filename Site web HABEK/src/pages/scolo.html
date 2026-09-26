@@ -1,0 +1,240 @@
+---
+title: Scolo — Suivi et recouvrement des frais de scolarité — HABEK
+description: Scolo aide les écoles privées à suivre les paiements de scolarité, relancer les parents par WhatsApp et SMS et piloter les encaissements. Installation sur place.
+canonical: /scolo.html
+scripts: demo.js, live-demo.js
+updated: 2026-09-26
+order: 2
+nav: scolo
+---
+<!--@head-->
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HABEK">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Scolo — Suivi et recouvrement des frais de scolarité">
+<meta property="og:description" content="Suivez les paiements, relancez les parents par WhatsApp et SMS, pilotez les encaissements. Une solution HABEK pour les écoles privées du Burkina Faso.">
+<meta property="og:url" content="{{site.shareOrigin}}/scolo.html">
+<meta property="og:image" content="{{site.shareOrigin}}/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HABEK — Logiciels métier pour le Burkina Faso">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scolo — Suivi et recouvrement des frais de scolarité">
+<meta name="twitter:description" content="Suivez les paiements et relancez les parents par WhatsApp et SMS.">
+<meta name="twitter:image" content="{{site.shareOrigin}}/assets/og-image.png">
+<!--@body-->
+<main id="top" tabindex="-1">
+
+  <section class="hero product-hero">
+    <div class="wrap hero-grid">
+      <div class="hero-inner">
+        <div class="hero-meta">
+          <span class="status-pill">Phase pilote</span>
+          <div class="caption">HABEK SOFTWARE · Scolo</div>
+        </div>
+        <h1 class="hero-title">Suivez les frais de scolarité et relancez les parents, sans cahier ni tableur.</h1>
+        <p class="body-lg">Scolo est la plateforme de gestion et de recouvrement des frais de scolarité pour les écoles privées. Suivi des paiements, relances automatiques par WhatsApp et SMS, tableaux de bord pour la direction — pensée pour le rythme et les moyens de paiement réels des familles burkinabè.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#demo">Demander une démo</a>
+          <a class="btn btn-ghost" href="#fonctionnement">Voir comment ça marche</a>
+        </div>
+        <div class="hero-links">
+          <a class="hero-link" href="https://scolo.habek.cc" rel="noopener">Accéder à l'application Scolo →</a>
+          <a class="hero-link" href="#essayer">Essayer la démo interactive →</a>
+          <a class="hero-link" href="{{root}}assets/brochure-scolo.pdf" download="HABEK-Scolo-brochure.pdf" type="application/pdf">Télécharger la brochure (PDF)</a>
+        </div>
+      </div>
+      <div class="product-visual">
+        {{> scolo-shots}}
+      </div>
+    </div>
+  </section>
+
+  <section id="probleme" class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="caption">Le constat</div>
+        <h2>Suivre les paiements à la main prend du temps</h2>
+      </div>
+      <div class="approche-grid problem-grid">
+        <div class="approche-item">
+          <h3>Un suivi dispersé</h3>
+          <p>Cahiers, fichiers Excel, listes papier : l'information sur les paiements est éparpillée et difficile à tenir à jour.</p>
+        </div>
+        <div class="approche-item">
+          <h3>Des relances au cas par cas</h3>
+          <p>Relancer chaque famille l'une après l'autre demande du temps, et les retards sont vite oubliés.</p>
+        </div>
+        <div class="approche-item">
+          <h3>Peu de visibilité pour la direction</h3>
+          <p>Savoir rapidement où en sont les encaissements et les impayés reste laborieux.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fonctionnement">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="caption">Comment ça marche</div>
+        <h2>De l'installation au suivi, en quatre étapes</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h4>Installation sur place</h4>
+          <p>Nous venons dans votre école et migrons vos élèves, vos classes et vos frais de scolarité depuis vos fichiers Excel ou papier. Vous n'avez rien à ressaisir.</p>
+        </li>
+        <li>
+          <h4>Suivi des paiements</h4>
+          <p>Vous voyez qui a payé et qui est en retard, sans tenir de cahier ni de tableur à côté.</p>
+        </li>
+        <li>
+          <h4>Relances automatiques</h4>
+          <p>Les parents en retard reçoivent un rappel par WhatsApp ou par SMS. Chaque école connecte son propre numéro WhatsApp Business : les messages partent de l'école, pas d'un numéro partagé.</p>
+        </li>
+        <li>
+          <h4>Pilotage par la direction</h4>
+          <p>Des tableaux de bord donnent à la direction une vue claire des encaissements et des impayés.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="essayer">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="caption">Essayer</div>
+        <h2>Essayez Scolo, sans inscription</h2>
+        <p>Une démonstration interactive avec des données fictives : parcourez le tableau de bord, les élèves, les paiements et les relances.</p>
+      </div>
+      <div class="live-demo" id="liveDemo">
+        <div class="live-demo-launch">
+          <a class="btn btn-primary" href="{{root}}demo/index.html" id="launchDemo" data-track="demo_launch">Lancer la démo interactive</a>
+          <a class="hero-link" href="{{root}}demo/index.html" target="_blank" rel="noopener" data-track="demo_launch">Ouvrir en plein écran →</a>
+          <p class="body-sm">La démo ne se charge qu'au clic (environ 230 Ko). Toutes les données sont fictives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="offre" class="tinted">
+    <div class="wrap offer-grid">
+      <div>
+        <div class="section-head">
+          <div class="caption">Mise en place et offre</div>
+          <h2>Une offre qui suit la taille de votre école</h2>
+        </div>
+        <ul class="check-list">
+          <li>Installation prise en charge, sur place, à partir de vos fichiers existants.</li>
+          <li>Tarif adapté à l'effectif réel de votre établissement, sur devis.</li>
+          <li>Règlement en deux temps, ou en une seule fois avec une remise.</li>
+          <li>Rappels envoyés depuis le numéro WhatsApp Business de votre école.</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>Où en est Scolo ?</h3>
+        <p>Scolo est actuellement en <strong>phase pilote</strong>. Nous validons chaque fonction sur le terrain avant de l'élargir.</p>
+        <p>Écrivez-nous pour discuter de la mise en place dans votre école : nous préparons la démonstration selon sa taille.</p>
+      </div>
+    </div>
+  </section>
+
+  {{proof}}
+
+  <section id="faq">
+    <div class="wrap faq-layout">
+      <div class="section-head">
+        <div class="caption">FAQ</div>
+        <h2>Questions sur Scolo</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Comment se passe la mise en place ?</summary>
+          <p>Nous venons sur place pour installer Scolo et migrer les données de votre école — liste des élèves, classes, frais de scolarité — à partir de vos fichiers existants, Excel ou papier. Vous n'avez pas à ressaisir vos données vous-même.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Les parents reçoivent-ils les messages d'un numéro inconnu ?</summary>
+          <p>Non. Chaque école connecte son propre numéro WhatsApp Business : les parents reçoivent les relances directement de l'école, pas d'un numéro générique partagé. Les rappels peuvent aussi passer par SMS.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Combien coûte Scolo ?</summary>
+          <p>Le tarif s'adapte à l'effectif réel de votre école ; nous établissons un devis précis sur demande. Le règlement peut se faire en deux temps, ou en une seule fois avec une remise.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Scolo est-il déjà disponible ?</summary>
+          <p>Scolo est actuellement en phase pilote. Contactez-nous pour discuter de la mise en place dans votre école.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Que deviennent les données de nos élèves ?</summary>
+          <p>Vos données restent votre propriété. Elles sont hébergées de façon sécurisée et traitées conformément à la réglementation burkinabè sur la protection des données personnelles — HABEK ne les utilise à aucune autre fin que le fonctionnement du logiciel. Voir aussi notre <a href="{{root}}confidentialite.html">politique de confidentialité</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-band demo" id="demo">
+    <div class="wrap demo-grid">
+      <div class="demo-intro">
+        <h2>Demander une démonstration</h2>
+        <p class="body-lg">Dites-nous quelques mots sur votre école. Votre message s'ouvre dans WhatsApp, prêt à envoyer : nous préparons la démonstration selon la taille de l'établissement.</p>
+        <ul class="demo-points">
+          <li>Vous relisez le message avant de l'envoyer.</li>
+          <li>Ce site n'enregistre aucune de ces informations.</li>
+          <li>Aucun prix affiché : le tarif suit l'effectif de votre école.</li>
+        </ul>
+        <p class="contact-detail">Vous préférez nous joindre autrement ? <a class="tel" href="tel:{{site.phoneTel}}">{{site.phoneDisplay}}</a> · <a class="tel" href="mailto:{{site.email}}">{{site.email}}</a></p>
+      </div>
+
+      <form class="demo-form" id="demoForm" data-wa="{{site.whatsapp}}" action="#demo">
+        <div class="field">
+          <label for="ecole">Nom de l'école <span class="hint">(obligatoire)</span></label>
+          <input type="text" id="ecole" name="ecole" required maxlength="100" autocomplete="organization">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="ville">Ville <span class="hint">(obligatoire)</span></label>
+            <input type="text" id="ville" name="ville" required maxlength="60" autocomplete="address-level2">
+          </div>
+          <div class="field">
+            <label for="effectif">Effectif approximatif</label>
+            <select id="effectif" name="effectif">
+              <option value="">Je ne sais pas / à préciser</option>
+              <option>Moins de 300 élèves</option>
+              <option>300 à 700 élèves</option>
+              <option>700 à 1500 élèves</option>
+              <option>Plus de 1500 élèves</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend>Niveaux d'enseignement <span class="hint">(plusieurs choix possibles)</span></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="niveau" value="Maternelle"> Maternelle</label>
+            <label class="choice"><input type="checkbox" name="niveau" value="Primaire"> Primaire</label>
+            <label class="choice"><input type="checkbox" name="niveau" value="Collège"> Collège</label>
+            <label class="choice"><input type="checkbox" name="niveau" value="Lycée"> Lycée</label>
+            <label class="choice"><input type="checkbox" name="niveau" value="Supérieur"> Supérieur</label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="nom">Votre nom et votre fonction</label>
+          <input type="text" id="nom" name="nom" maxlength="80" autocomplete="name">
+        </div>
+        <fieldset class="field">
+          <legend>Comment souhaitez-vous être contacté ?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="contact" value="Par message WhatsApp" checked> Par WhatsApp</label>
+            <label class="choice"><input type="radio" name="contact" value="Par appel téléphonique"> Par appel</label>
+          </div>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Ouvrir WhatsApp avec ma demande</button>
+        <p class="form-status" id="demoStatus" role="status" aria-live="polite"></p>
+        <p class="form-note">Rien n'est envoyé tant que vous n'avez pas appuyé sur « Envoyer » dans WhatsApp.</p>
+        <noscript><p class="form-note">JavaScript est désactivé : écrivez-nous directement sur <a href="https://wa.me/{{site.whatsapp}}">WhatsApp</a>.</p></noscript>
+      </form>
+    </div>
+  </section>
+
+</main>

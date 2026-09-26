@@ -1,0 +1,23 @@
+{
+  "origin": "https://habek.cc",
+  "shareOrigin": "https://habek.vercel.app",
+  "whatsapp": "22671598288",
+  "phoneTel": "+22671598288",
+  "phoneDisplay": "+226 71 59 82 88",
+  "email": "support@habek.cc",
+  "facebook": "https://www.facebook.com/share/1EZ521NkNx/",
+  "proof": {
+    "enabled": false,
+    "consent": false,
+    "consentDate": "",
+    "quote": "",
+    "author": "",
+    "role": "",
+    "school": "",
+    "results": []
+  },
+  "analytics": {
+    "provider": "vercel",
+    "enabled": true
+  }
+}

@@ -1,0 +1,7 @@
+# Fichiers de travail : non nécessaires au site publié
+src/
+build.mjs
+site.config.json
+brand/
+README.md
+SITE_AUDIT.md

@@ -1,0 +1,6 @@
+Composants tiers de la démonstration (fichiers servis localement, aucun chargement externe) :
+- Alpine.js 3.13.5 — licence MIT — https://github.com/alpinejs/alpine
+- Tailwind CSS 3.4 (CSS compilé) — licence MIT — https://tailwindcss.com
+- Inter — licence SIL OFL 1.1 (voir ../assets/fonts/OFL-Inter.txt)
+- Montserrat — licence SIL OFL 1.1 (voir fonts/OFL-Montserrat.txt)
+Toutes les données affichées sont fictives.

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Démo interactive de Scolo — données fictives — HABEK</title>
+
+
+
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="demo.css">
+<script defer src="app.js"></script>
+<script defer src="alpine.min.js"></script>
+
+<style>
+  [x-cloak] { display: none !important; }
+  * { scrollbar-width: none; -ms-overflow-style: none; }
+  *::-webkit-scrollbar { display: none; }
+  body { font-family: 'Inter', sans-serif; }
+  .font-heading { font-family: 'Montserrat', sans-serif; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  @media print {
+    body * { visibility: hidden; }
+    #receiptPrintArea, #receiptPrintArea * { visibility: visible; }
+    #receiptPrintArea { position: fixed; inset: 0; padding: 2rem; }
+  }
+</style>
+</head>
+
+<body class="bg-scolo-cream text-scolo-dark" x-data="scoloApp()" x-cloak>
+
+  <!-- ===================== BANDEAU DÉMO (HABEK) ===================== -->
+  <div class="bg-scolo-gold text-scolo-navy text-xs font-body px-4 py-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+    <span><strong>Démonstration interactive</strong> — toutes les données affichées sont fictives.</span>
+    <a href="../scolo.html#demo" target="_top" class="font-semibold underline underline-offset-2">Demander une démonstration</a>
+  </div>
+
+  <!-- ===================== TOASTS ===================== -->
+  <div class="fixed top-4 right-4 z-[100] space-y-2" style="width: min(340px, 90vw);">
+    <template x-for="t in toasts" :key="t.id">
+      <div x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-[-8px]" x-transition:enter-end="opacity-100 translate-y-0"
+           class="bg-scolo-navy text-scolo-cream font-body text-sm rounded-lg shadow-lg px-4 py-3 flex items-start gap-2">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="#D6A23C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <span x-text="t.message"></span>
+      </div>
+    </template>
+  </div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="sticky top-0 z-30 bg-scolo-navy text-scolo-cream border-b border-white/10">
+    <div class="flex items-center justify-between px-4 md:px-8 h-16">
+      <div class="flex items-center gap-3">
+        <svg viewBox="0 0 40 40" class="w-8 h-8 shrink-0" fill="none"><circle cx="20" cy="20" r="18" stroke="#D6A23C" stroke-width="2"/><path d="M12 20.5L17 25.5L28 14.5" stroke="#D6A23C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div>
+          <p class="font-heading font-bold text-lg leading-none">Scolo</p>
+          <p class="text-[11px] text-scolo-cream/50 leading-none mt-1 hidden sm:block">Établissement de démonstration</p>
+        </div>
+      </div>
+      <p class="font-heading font-semibold text-sm md:text-base hidden md:block" x-text="currentSectionLabel()"></p>
+      <div class="flex items-center gap-3">
+        <button @click="toggleNetwork()" class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium transition-colors"
+                :class="networkOnline ? 'bg-success/15 text-success' : 'bg-scolo-cream/15 text-scolo-cream/80'">
+          <span class="h-2 w-2 rounded-full" :class="networkOnline ? 'bg-success' : 'bg-scolo-cream/50 animate-pulse'"></span>
+          <span class="hidden sm:inline" x-text="networkOnline ? 'Connecté / Synchronisé' : 'Mode Caisse Offline'"></span>
+        </button>
+        <div class="hidden md:flex items-center gap-2 pl-3 border-l border-white/15">
+          <div class="w-8 h-8 rounded-full bg-scolo-gold text-scolo-navy font-heading font-bold text-xs flex items-center justify-center">DR</div>
+          <span class="text-xs text-scolo-cream/70">Directeur</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex">
+    <!-- ===================== SIDEBAR (desktop) ===================== -->
+    <aside class="hidden md:flex md:flex-col md:w-64 md:shrink-0 bg-scolo-navy text-scolo-cream min-h-[calc(100vh-4rem)] sticky top-16 py-6 px-3 gap-1 overflow-y-auto">
+      <template x-for="item in navSections" :key="item.id">
+        <button @click="goTo(item.id)"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors text-left"
+                :class="topView === item.id ? 'bg-scolo-gold text-scolo-navy font-semibold' : 'text-scolo-cream/70 hover:bg-white/5 hover:text-scolo-cream'">
+          <span x-html="item.icon" class="shrink-0 w-5 h-5"></span>
+          <span x-text="item.label"></span>
+        </button>
+      </template>
+    </aside>
+
+    <!-- ===================== MOBILE BOTTOM NAV ===================== -->
+    <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-scolo-navy border-t border-white/10 flex justify-around py-2 overflow-x-auto">
+      <template x-for="item in navSections" :key="item.id">
+        <button @click="goTo(item.id)" class="flex flex-col items-center gap-1 px-2 py-1 text-[10px] font-medium shrink-0"
+                :class="topView === item.id ? 'text-scolo-gold' : 'text-scolo-cream/50'">
+          <span x-html="item.icon" class="w-5 h-5"></span>
+          <span x-text="item.shortLabel"></span>
+        </button>
+      </template>
+    </nav>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="flex-1 min-w-0 px-4 md:px-8 py-6 md:py-8 pb-24 md:pb-8">
+
+      <!-- Sub-nav pills (sections avec sous-vues) -->
+      <div class="flex flex-wrap gap-2 mb-6" x-show="currentSubs().length > 0">
+        <template x-for="sub in currentSubs()" :key="sub.id">
+          <button @click="activeSub[topView] = sub.id"
+                  class="px-4 py-2 rounded-lg text-xs font-semibold border transition-colors"
+                  :class="activeSub[topView] === sub.id ? 'bg-scolo-navy text-scolo-cream border-scolo-navy' : 'border-scolo-navy/15 text-scolo-dark/60 bg-white hover:border-scolo-navy/40'"
+                  x-text="sub.label"></button>
+        </template>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 1. TABLEAU DE BORD                                            -->
+      <!-- ============================================================ -->
+      <template x-if="topView === 'dashboard'">
+        <div class="space-y-8">
+          <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Tableau de bord</h1>
+            <p class="text-sm text-scolo-dark/60 mt-1">Vue globale des paiements et des impayés — année 2026-2027</p>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div class="bg-white rounded-xl border border-scolo-navy/10 p-6">
+              <p class="text-sm text-scolo-dark/60 mb-2">Taux de recouvrement global</p>
+              <p class="font-heading text-3xl font-bold text-scolo-navy tabular"><span x-text="kpis.tauxGlobal"></span>%</p>
+              <p class="text-xs text-success font-medium mt-2">+3,2 pts vs mois dernier</p>
+            </div>
+            <div class="bg-white rounded-xl border border-scolo-navy/10 p-6">
+              <p class="text-sm text-scolo-dark/60 mb-2">Encaissé ce mois</p>
+              <p class="font-heading text-3xl font-bold text-scolo-navy tabular" x-text="formatCfa(kpis.totalEncaisseMois)"></p>
+              <p class="text-xs text-scolo-dark/40 mt-2">Toutes classes, tous modes confondus</p>
+            </div>
+            <div class="bg-white rounded-xl border border-danger/20 p-6">
+              <p class="text-sm text-scolo-dark/60 mb-2">Total des impayés</p>
+              <p class="font-heading text-3xl font-bold text-danger tabular" x-text="formatCfa(totalImpayes())"></p>
+              <p class="text-xs text-scolo-dark/40 mt-2" x-text="studentsByStatus('🔴').length + ' élève(s) en statut Impayé'"></p>
+            </div>
+            <div class="bg-white rounded-xl border border-scolo-navy/10 p-6">
+              <p class="text-sm text-scolo-dark/60 mb-2">Relances envoyées (7j)</p>
+              <p class="font-heading text-3xl font-bold text-scolo-navy tabular" x-text="kpis.relancesEnvoyees"></p>
+              <p class="text-xs text-scolo-dark/40 mt-2">WhatsApp &amp; SMS confondus</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <div class="lg:col-span-3 bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+              <h2 class="font-heading text-lg font-semibold text-scolo-navy mb-6">Taux de recouvrement par classe</h2>
+              <div class="space-y-5">
+                <template x-for="c in classRates" :key="c.name">
+                  <div>
+                    <div class="flex justify-between text-sm mb-1.5">
+                      <span class="font-medium" x-text="c.name"></span>
+                      <span class="tabular font-medium" x-text="c.rate + '%'"></span>
+                    </div>
+                    <div class="h-2.5 rounded-full bg-scolo-cream-deep overflow-hidden">
+                      <div class="h-full rounded-full transition-all duration-500"
+                           :class="c.rate >= 85 ? 'bg-success' : c.rate >= 65 ? 'bg-scolo-gold' : 'bg-danger'"
+                           :style="'width: ' + c.rate + '%'"></div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+
+            <div class="lg:col-span-2 bg-white rounded-xl border border-danger/20 p-6 md:p-8">
+              <h2 class="font-heading text-lg font-semibold text-scolo-navy mb-1">Retards critiques</h2>
+              <p class="text-xs text-scolo-dark/50 mb-5">Élèves au statut 🔴 Impayé</p>
+              <div class="space-y-4">
+                <template x-for="s in studentsByStatus('🔴').slice(0,5)" :key="s.id">
+                  <button @click="openFiche(s)" class="w-full flex items-center justify-between border-b border-scolo-navy/5 pb-4 last:border-0 last:pb-0 text-left">
+                    <div>
+                      <p class="text-sm font-medium" x-text="s.firstName + ' ' + s.lastName"></p>
+                      <p class="text-xs text-scolo-dark/50" x-text="s.class + ' · ' + daysLate(s) + ' jours de retard'"></p>
+                    </div>
+                    <span class="text-sm font-semibold text-danger tabular" x-text="formatCfa(studentBalance(s))"></span>
+                  </button>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- ============================================================ -->
+      <!-- 2. ÉLÈVES — Base élèves / Fiche élève                        -->
+      <!-- ============================================================ -->
+      <template x-if="topView === 'eleves' && !ficheStudent">
+        <div class="space-y-6">
+          <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Base élèves</h1>
+            <p class="text-sm text-scolo-dark/60 mt-1" x-text="filteredBase.length + ' élève(s)'"></p>
+          </div>
+
+          <div class="relative max-w-xl">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-scolo-dark/30" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+            <input type="text" x-model="baseSearch" placeholder="Nom, prénom, matricule, classe ou téléphone du parent…"
+                   class="w-full bg-white border border-scolo-navy/15 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-scolo-gold focus:ring-2 focus:ring-scolo-gold/20">
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-scolo-navy/10 text-left text-scolo-navy/60 font-heading text-xs">
+                  <th class="py-3 px-5 font-semibold">Élève</th>
+                  <th class="py-3 px-5 font-semibold">Classe</th>
+                  <th class="py-3 px-5 font-semibold">Matricule</th>
+                  <th class="py-3 px-5 font-semibold">Téléphone parent</th>
+                  <th class="py-3 px-5 font-semibold">Statut</th>
+                  <th class="py-3 px-5"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="s in filteredBase" :key="s.id">
+                  <tr class="border-b border-scolo-navy/5 last:border-0 hover:bg-scolo-cream-soft cursor-pointer" @click="openFiche(s)">
+                    <td class="py-3.5 px-5 font-medium" x-text="s.firstName + ' ' + s.lastName"></td>
+                    <td class="py-3.5 px-5 text-scolo-dark/60" x-text="s.class"></td>
+                    <td class="py-3.5 px-5 text-scolo-dark/60 tabular" x-text="s.matricule"></td>
+                    <td class="py-3.5 px-5 text-scolo-dark/60 tabular" x-text="s.guardianPhone"></td>
+                    <td class="py-3.5 px-5"><span class="text-xs font-semibold rounded-full px-2.5 py-1" :class="statusClasses(studentStatus(s))" x-text="statusLabel(studentStatus(s))"></span></td>
+                    <td class="py-3.5 px-5 text-right text-scolo-navy/40">→</td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- FICHE ÉLÈVE -->
+      <template x-if="topView === 'eleves' && ficheStudent">
+        <div class="space-y-6 max-w-4xl">
+          <button @click="ficheStudent = null" class="text-sm text-scolo-navy/60 hover:text-scolo-navy inline-flex items-center gap-1.5">
+            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Retour à la base élèves
+          </button>
+
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy" x-text="'Fiche de ' + ficheStudent.firstName + ' ' + ficheStudent.lastName"></h1>
+              <p class="text-sm text-scolo-dark/60 mt-1" x-text="ficheStudent.class + ' · ' + ficheStudent.matricule"></p>
+            </div>
+            <button @click="startPaymentFor(ficheStudent)" class="bg-scolo-gold text-scolo-navy font-heading font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-scolo-gold-600 transition-colors">
+              Encaisser un paiement
+            </button>
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+            <h2 class="font-heading font-semibold text-scolo-navy mb-4">Informations</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4 text-sm">
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Matricule</p><p class="font-medium tabular" x-text="ficheStudent.matricule"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Nom complet</p><p class="font-medium" x-text="ficheStudent.firstName + ' ' + ficheStudent.lastName"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Date de naissance</p><p class="font-medium" x-text="formatDate(ficheStudent.birthDate)"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Classe</p><p class="font-medium" x-text="ficheStudent.class"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Année scolaire</p><p class="font-medium" x-text="ficheStudent.contract.anneeScolaire"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Contrat d'inscription</p><p class="font-medium tabular" x-text="ficheStudent.contract.numero"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Parent / tuteur</p><p class="font-medium" x-text="ficheStudent.guardianName"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Téléphone</p><p class="font-medium tabular" x-text="ficheStudent.guardianPhone"></p></div>
+              <div><p class="text-scolo-dark/40 text-xs mb-0.5">Statut</p><span class="text-xs font-semibold rounded-full px-2.5 py-1" :class="statusClasses(studentStatus(ficheStudent))" x-text="statusLabel(studentStatus(ficheStudent))"></span></div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+            <h2 class="font-heading font-semibold text-scolo-navy mb-4">Situation financière</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="bg-scolo-cream rounded-lg px-4 py-3.5">
+                <p class="text-xs text-scolo-dark/50 mb-1">Total à payer</p>
+                <p class="font-heading font-bold tabular" x-text="formatCfa(studentTotalDue(ficheStudent))"></p>
+              </div>
+              <div class="bg-scolo-cream rounded-lg px-4 py-3.5">
+                <p class="text-xs text-scolo-dark/50 mb-1">Total payé</p>
+                <p class="font-heading font-bold tabular text-success" x-text="formatCfa(studentTotalPaid(ficheStudent))"></p>
+              </div>
+              <div class="bg-scolo-cream rounded-lg px-4 py-3.5">
+                <p class="text-xs text-scolo-dark/50 mb-1">Reste à payer</p>
+                <p class="font-heading font-bold tabular text-danger" x-text="formatCfa(studentBalance(ficheStudent))"></p>
+              </div>
+              <div class="bg-scolo-cream rounded-lg px-4 py-3.5">
+                <p class="text-xs text-scolo-dark/50 mb-1">Prochaine échéance</p>
+                <template x-if="nextUnpaid(ficheStudent)">
+                  <p class="font-heading font-bold tabular text-sm" x-text="formatDate(nextUnpaid(ficheStudent).inst.dueDate)"></p>
+                </template>
+                <p x-show="!nextUnpaid(ficheStudent)" class="font-heading font-bold text-sm text-success">Aucune</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+            <h2 class="font-heading font-semibold text-scolo-navy mb-4">Historique des paiements</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-left text-scolo-navy/50 text-xs">
+                    <th class="pb-2 font-semibold">Date</th><th class="pb-2 font-semibold">Montant</th><th class="pb-2 font-semibold">Mode</th><th class="pb-2 font-semibold">Référence</th><th class="pb-2 font-semibold">Statut</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template x-for="p in ficheStudent.payments" :key="p.date + p.amount">
+                    <tr class="border-t border-scolo-navy/5">
+                      <td class="py-2.5 tabular" x-text="formatDate(p.date)"></td>
+                      <td class="py-2.5 tabular font-medium" x-text="formatCfa(p.amount)"></td>
+                      <td class="py-2.5" x-text="modeLabel(p)"></td>
+                      <td class="py-2.5 text-scolo-dark/50 tabular" x-text="modeReference(p) || '—'"></td>
+                      <td class="py-2.5"><span class="text-xs font-semibold rounded-full px-2 py-0.5" :class="paymentStatutClasses(p.statut)" x-text="p.statut"></span></td>
+                    </tr>
+                  </template>
+                  <tr x-show="ficheStudent.payments.length === 0"><td colspan="5" class="py-4 text-scolo-dark/40 text-sm">Aucun paiement enregistré.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+            <h2 class="font-heading font-semibold text-scolo-navy mb-4">Échéancier</h2>
+            <div class="space-y-2">
+              <template x-for="(i, idx) in ficheStudent.installments" :key="i.label">
+                <div class="flex items-center justify-between text-sm border-b border-scolo-navy/5 pb-2.5 last:border-0">
+                  <div class="flex items-center gap-2">
+                    <span x-text="installmentIcon(ficheStudent, idx)"></span>
+                    <span x-text="(idx+1) + 'ᵉ paiement — ' + i.label"></span>
+                  </div>
+                  <div class="text-right">
+                    <span class="tabular font-medium" x-text="formatCfa(i.amount)"></span>
+                    <span class="text-xs text-scolo-dark/40 ml-2" x-text="formatDate(i.dueDate)"></span>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+            <h2 class="font-heading font-semibold text-scolo-navy mb-4">Relances</h2>
+            <div class="grid grid-cols-3 gap-4 text-sm">
+              <template x-for="stage in ['J-7','J-3','J']" :key="stage">
+                <div class="bg-scolo-cream rounded-lg px-4 py-3">
+                  <p class="text-xs text-scolo-dark/50 mb-1" x-text="stage"></p>
+                  <p class="font-medium text-sm" x-text="relanceStepLabel(ficheStudent, stage)"></p>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8">
+            <h2 class="font-heading font-semibold text-scolo-navy mb-4">Documents</h2>
+            <div class="space-y-2">
+              <template x-for="d in studentDocuments(ficheStudent)" :key="d.label">
+                <div class="flex items-center justify-between text-sm border border-scolo-navy/10 rounded-lg px-4 py-2.5">
+                  <div class="flex items-center gap-2.5">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 text-scolo-navy/40" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                    <div><p class="font-medium" x-text="d.label"></p><p class="text-xs text-scolo-dark/40" x-text="d.type + ' · ' + formatDate(d.date)"></p></div>
+                  </div>
+                  <button class="text-scolo-navy/50 hover:text-scolo-gold text-xs font-medium">Télécharger</button>
+                </div>
+              </template>
+              <p x-show="studentDocuments(ficheStudent).length === 0" class="text-sm text-scolo-dark/40">Aucun document pour le moment.</p>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- ============================================================ -->
+      <!-- 3. PAIEMENTS — Enregistrer / Historique                      -->
+      <!-- ============================================================ -->
+      <template x-if="topView === 'paiements' && activeSub.paiements === 'enregistrer'">
+        <div class="max-w-2xl mx-auto space-y-6">
+          <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Enregistrer un paiement</h1>
+            <p class="text-sm text-scolo-dark/60 mt-1">Recherchez un élève, choisissez le mode, encaissez</p>
+          </div>
+
+          <div class="relative">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-scolo-dark/30" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>
+            <input type="text" x-model="paiementSearch" placeholder="Nom ou matricule de l'élève…"
+                   class="w-full bg-white border border-scolo-navy/15 rounded-xl pl-12 pr-4 py-3.5 text-base focus:outline-none focus:border-scolo-gold focus:ring-2 focus:ring-scolo-gold/20">
+          </div>
+
+          <div class="space-y-2" x-show="paiementSearch.length > 0 && !paiementStudent">
+            <template x-for="s in filteredForSearch(paiementSearch)" :key="s.id">
+              <button @click="startPaymentFor(s)" class="w-full flex items-center justify-between bg-white border border-scolo-navy/10 rounded-xl px-5 py-4 text-left hover:border-scolo-gold transition-colors">
+                <div><p class="font-medium text-sm" x-text="s.firstName + ' ' + s.lastName"></p><p class="text-xs text-scolo-dark/50" x-text="s.class + ' · ' + s.matricule"></p></div>
+                <span class="text-xs font-semibold rounded-full px-2.5 py-1" :class="statusClasses(studentStatus(s))" x-text="statusLabel(studentStatus(s))"></span>
+              </button>
+            </template>
+            <p x-show="filteredForSearch(paiementSearch).length === 0" class="text-sm text-scolo-dark/40 text-center py-6">Aucun élève trouvé.</p>
+          </div>
+
+          <template x-if="paiementStudent">
+            <div class="space-y-5">
+              <div class="bg-white rounded-xl border border-scolo-navy/10 p-6">
+                <div class="flex items-start justify-between mb-4">
+                  <div>
+                    <p class="font-heading text-lg font-bold text-scolo-navy" x-text="paiementStudent.firstName + ' ' + paiementStudent.lastName"></p>
+                    <p class="text-sm text-scolo-dark/50" x-text="paiementStudent.class + ' · ' + paiementStudent.matricule"></p>
+                  </div>
+                  <button @click="paiementStudent = null; paiementSearch = ''" class="text-scolo-dark/30 hover:text-scolo-dark text-sm">✕</button>
+                </div>
+                <div class="bg-scolo-cream rounded-lg px-5 py-4 flex items-center justify-between">
+                  <span class="font-heading font-semibold text-sm">Solde restant dû</span>
+                  <span class="font-heading text-xl font-bold text-scolo-navy tabular" x-text="formatCfa(studentBalance(paiementStudent))"></span>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 space-y-5">
+                <h3 class="font-heading font-semibold text-scolo-navy">Mode de paiement</h3>
+                <div class="grid grid-cols-2 gap-2">
+                  <template x-for="m in modesPaiement.filter(m => m.actif)" :key="m.id">
+                    <button @click="encaissementForm.mode = m.id"
+                            class="px-4 py-2.5 rounded-lg text-sm font-medium border transition-colors"
+                            :class="encaissementForm.mode === m.id ? 'bg-scolo-navy text-scolo-cream border-scolo-navy' : 'border-scolo-navy/15 text-scolo-dark/70 hover:border-scolo-navy/40'"
+                            x-text="m.label"></button>
+                  </template>
+                </div>
+
+                <div>
+                  <label class="text-sm font-medium block mb-1.5">Montant (FCFA)</label>
+                  <input type="number" x-model.number="encaissementForm.montant" placeholder="0"
+                         class="w-full bg-white border border-scolo-navy/15 rounded-lg px-4 py-3 text-lg tabular focus:outline-none focus:border-scolo-gold focus:ring-2 focus:ring-scolo-gold/20">
+                  <p x-show="encaissementForm.montant && encaissementForm.montant > studentBalance(paiementStudent)" class="text-xs text-info mt-1.5">
+                    Ce montant dépasse le solde restant — l'excédent sera crédité sur les échéances suivantes.
+                  </p>
+                </div>
+
+                <div x-show="encaissementForm.mode === 'Mobile Money'" class="grid grid-cols-2 gap-3">
+                  <div class="col-span-2">
+                    <label class="text-xs font-medium block mb-1">Opérateur</label>
+                    <select x-model="encaissementForm.details.operateur" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm">
+                      <template x-for="op in operateursMM.filter(o => o.actif)" :key="op.id"><option :value="op.label" x-text="op.label"></option></template>
+                    </select>
+                  </div>
+                  <div><label class="text-xs font-medium block mb-1">Numéro</label><input type="text" x-model="encaissementForm.details.numero" placeholder="+226 ..." class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                  <div><label class="text-xs font-medium block mb-1">Référence de transaction</label><input type="text" x-model="encaissementForm.details.reference" placeholder="OM-..." class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                </div>
+
+                <div x-show="encaissementForm.mode === 'Chèque'" class="grid grid-cols-2 gap-3">
+                  <div><label class="text-xs font-medium block mb-1">Numéro du chèque</label><input type="text" x-model="encaissementForm.details.numeroCheque" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                  <div><label class="text-xs font-medium block mb-1">Banque</label><input type="text" x-model="encaissementForm.details.banque" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                  <div class="col-span-2"><label class="text-xs font-medium block mb-1">Date d'émission</label><input type="date" x-model="encaissementForm.details.dateEmission" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                </div>
+
+                <div x-show="encaissementForm.mode === 'Virement bancaire'" class="grid grid-cols-2 gap-3">
+                  <div><label class="text-xs font-medium block mb-1">Banque</label><input type="text" x-model="encaissementForm.details.banque" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                  <div><label class="text-xs font-medium block mb-1">Référence du virement</label><input type="text" x-model="encaissementForm.details.reference" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                  <div><label class="text-xs font-medium block mb-1">Date</label><input type="date" x-model="encaissementForm.details.date" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                  <div><label class="text-xs font-medium block mb-1">Compte émetteur (optionnel)</label><input type="text" x-model="encaissementForm.details.compteEmetteur" class="w-full bg-white border border-scolo-navy/15 rounded-lg px-3 py-2.5 text-sm"></div>
+                </div>
+
+                <button @click="validateEncaissement()" :disabled="isSubmitting || !encaissementForm.montant || encaissementForm.montant <= 0"
+                        class="w-full bg-scolo-gold text-scolo-navy font-heading font-semibold text-sm py-3.5 rounded-lg hover:bg-scolo-gold-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  <span x-text="isSubmitting ? 'Encaissement…' : 'Valider l\'encaissement'"></span>
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <template x-if="topView === 'paiements' && activeSub.paiements === 'historique'">
+        <div class="space-y-6">
+          <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Historique des paiements</h1>
+            <p class="text-sm text-scolo-dark/60 mt-1" x-text="allPayments().length + ' transaction(s)'"></p>
+          </div>
+          <div class="bg-white rounded-xl border border-scolo-navy/10 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-scolo-navy/10 text-left text-scolo-navy/60 font-heading text-xs">
+                  <th class="py-3 px-5 font-semibold">Date</th><th class="py-3 px-5 font-semibold">Élève</th><th class="py-3 px-5 font-semibold text-right">Montant</th>
+                  <th class="py-3 px-5 font-semibold">Mode</th><th class="py-3 px-5 font-semibold">Référence</th><th class="py-3 px-5 font-semibold">Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="p in allPayments()" :key="p.student + p.date + p.amount">
+                  <tr class="border-b border-scolo-navy/5 last:border-0 hover:bg-scolo-cream-soft">
+                    <td class="py-3.5 px-5 tabular text-scolo-dark/60" x-text="formatDate(p.date)"></td>
+                    <td class="py-3.5 px-5 font-medium" x-text="p.student"></td>
+                    <td class="py-3.5 px-5 text-right tabular font-medium" x-text="formatCfa(p.amount)"></td>
+                    <td class="py-3.5 px-5" x-text="modeLabel(p)"></td>
+                    <td class="py-3.5 px-5 text-scolo-dark/50 tabular" x-text="modeReference(p) || '—'"></td>
+                    <td class="py-3.5 px-5"><span class="text-xs font-semibold rounded-full px-2.5 py-1 inline-flex items-center gap-1.5" :class="paymentStatutClasses(p.statut)">
+                      <span class="w-1.5 h-1.5 rounded-full" :class="p.statut === 'Validé' ? 'bg-success' : p.statut === 'En cours' ? 'bg-scolo-navy animate-pulse' : 'bg-danger'"></span>
+                      <span x-text="p.statut"></span>
+                    </span></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- ============================================================ -->
+      <!-- 4. ÉCHÉANCIERS                                                -->
+      <!-- ============================================================ -->
+      <template x-if="topView === 'echeanciers'">
+        <div class="space-y-6">
+          <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy" x-text="echeanciersTitle()"></h1>
+            <p class="text-sm text-scolo-dark/60 mt-1" x-text="echeanciersRows().length + ' échéance(s)'"></p>
+          </div>
+          <input type="text" x-model="echSearch" placeholder="Rechercher un élève…"
+                 class="max-w-md bg-white border border-scolo-navy/15 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-scolo-gold">
+          <div class="bg-white rounded-xl border border-scolo-navy/10 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-scolo-navy/10 text-left text-scolo-navy/60 font-heading text-xs">
+                  <th class="py-3 px-5 font-semibold">Élève</th><th class="py-3 px-5 font-semibold">Classe</th><th class="py-3 px-5 font-semibold">Échéance</th>
+                  <th class="py-3 px-5 font-semibold">Date</th><th class="py-3 px-5 font-semibold text-right">Montant dû</th><th class="py-3 px-5 font-semibold">Statut</th><th class="py-3 px-5"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="row in echeanciersRows()" :key="row.student.id + row.inst.label">
+                  <tr class="border-b border-scolo-navy/5 last:border-0 hover:bg-scolo-cream-soft">
+                    <td class="py-3.5 px-5 font-medium" x-text="row.student.firstName + ' ' + row.student.lastName"></td>
+                    <td class="py-3.5 px-5 text-scolo-dark/60" x-text="row.student.class"></td>
+                    <td class="py-3.5 px-5" x-text="row.inst.label"></td>
+                    <td class="py-3.5 px-5 tabular text-scolo-dark/60" x-text="formatDate(row.inst.dueDate)"></td>
+                    <td class="py-3.5 px-5 text-right tabular" x-text="formatCfa(row.inst.amount - row.inst.paid)"></td>
+                    <td class="py-3.5 px-5"><span class="text-xs font-semibold rounded-full px-2.5 py-1" :class="statusClasses(studentStatus(row.student))" x-text="statusLabel(studentStatus(row.student))"></span></td>
+                    <td class="py-3.5 px-5 text-right"><button @click="openFiche(row.student)" class="text-scolo-navy/50 hover:text-scolo-gold text-xs font-medium">Voir la fiche</button></td>
+                  </tr>
+                </template>
+                <tr x-show="echeanciersRows().length === 0"><td colspan="7" class="py-6 text-center text-scolo-dark/40">Aucune échéance dans cette vue.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- ============================================================ -->
+      <!-- 5. RELANCES                                                   -->
+      <!-- ============================================================ -->
+      <template x-if="topView === 'relances' && (activeSub.relances === 'j7' || activeSub.relances === 'j3' || activeSub.relances === 'j')">
+        <div class="space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy" x-text="'Relances — ' + stageLabel(activeSub.relances)"></h1>
+              <p class="text-sm text-scolo-dark/60 mt-1" x-text="relancesForStage(activeSub.relances).length + ' élève(s) concerné(s)'"></p>
+            </div>
+            <button @click="launchRelanceWave()" class="bg-scolo-gold text-scolo-navy font-heading font-semibold text-sm px-5 py-3 rounded-lg hover:bg-scolo-gold-600 transition-colors">
+              Lancer la vague de relances WhatsApp
+            </button>
+          </div>
+          <div class="bg-white rounded-xl border border-scolo-navy/10 divide-y divide-scolo-navy/5">
+            <template x-for="s in relancesForStage(activeSub.relances)" :key="s.id">
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+                <div class="min-w-[160px]"><p class="text-sm font-medium" x-text="s.firstName + ' ' + s.lastName"></p><p class="text-xs text-scolo-dark/50" x-text="s.class + ' · ' + s.guardianPhone"></p></div>
+                <span class="text-xs text-scolo-dark/60 tabular" x-text="formatCfa(studentBalance(s)) + ' dû'"></span>
+                <span class="text-xs font-semibold rounded-full px-2.5 py-1" :class="statusClasses(studentStatus(s))" x-text="statusLabel(studentStatus(s))"></span>
+                <button @click="openFiche(s)" class="text-xs font-medium text-scolo-navy/60 hover:text-scolo-gold">Voir la fiche →</button>
+              </div>
+            </template>
+            <p x-show="relancesForStage(activeSub.relances).length === 0" class="px-5 py-6 text-sm text-scolo-dark/40">Aucun élève à ce stade actuellement.</p>
+          </div>
+        </div>
+      </template>
+
+      <template x-if="topView === 'relances' && activeSub.relances === 'modeles'">
+        <div class="space-y-6" x-data="{ previewId: 12 }">
+          <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Modèles de messages</h1>
+            <p class="text-sm text-scolo-dark/60 mt-1">Un modèle par étape — les variables sont remplacées automatiquement par élève</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 bg-white rounded-lg border border-scolo-navy/10 px-4 py-3">
+            <span class="text-xs font-medium text-scolo-dark/60">Aperçu pour :</span>
+            <select x-model.number="previewId" class="bg-scolo-cream rounded-md text-sm px-3 py-1.5">
+              <template x-for="s in students" :key="s.id"><option :value="s.id" x-text="s.firstName + ' ' + s.lastName"></option></template>
+            </select>
+          </div>
+
+          <template x-for="stage in ['j7','j3','j']" :key="stage">
+            <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 md:p-8 space-y-4">
+              <div class="flex items-center justify-between">
+                <h2 class="font-heading font-semibold text-scolo-navy" x-text="'Message ' + stageLabel(stage)"></h2>
+                <select x-model="messageTemplates[stage].canal" class="bg-scolo-cream rounded-md text-xs font-medium px-3 py-1.5">
+                  <option>WhatsApp</option><option>SMS</option><option>Email</option>
+                </select>
+              </div>
+              <textarea x-model="messageTemplates[stage].texte" rows="5"
+                        class="w-full bg-scolo-cream-soft border border-scolo-navy/10 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-scolo-gold"></textarea>
+              <div class="flex flex-wrap gap-1.5">
+                <template x-for="v in ['[Nom élève]','[Classe]','[Montant dû]','[Échéance]','[Type de paiement]','[Numéro de facture/reçu]','[Période concernée]']" :key="v">
+                  <span class="text-[11px] font-mono bg-scolo-navy/5 text-scolo-navy/70 rounded px-2 py-1" x-text="v"></span>
+                </template>
+              </div>
+              <div class="border-t border-scolo-navy/10 pt-4">
+                <p class="text-xs font-semibold text-scolo-navy/50 mb-2">Aperçu généré</p>
+                <p class="text-sm bg-scolo-cream rounded-lg px-4 py-3 whitespace-pre-line" x-text="renderTemplate(messageTemplates[stage].texte, students.find(s => s.id === previewId))"></p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <template x-if="topView === 'relances' && activeSub.relances === 'historique'">
+        <div class="space-y-6">
+          <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Historique des relances</h1>
+          <div class="bg-white rounded-xl border border-scolo-navy/10 divide-y divide-scolo-navy/5">
+            <template x-for="h in relanceHistorique" :key="h.id">
+              <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm">
+                <span class="font-medium" x-text="h.student"></span>
+                <span class="text-xs font-semibold rounded-full px-2.5 py-1 bg-scolo-navy/10 text-scolo-navy" x-text="h.stage"></span>
+                <span class="text-scolo-dark/50" x-text="h.canal"></span>
+                <span class="text-scolo-dark/50 tabular" x-text="formatDate(h.date)"></span>
+                <span class="text-xs font-semibold rounded-full px-2.5 py-1" :class="relanceStatusClasses(h.statut)" x-text="h.statut"></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+
+      <!-- ============================================================ -->
+      <!-- 6. PARAMÈTRES                                                 -->
+      <!-- ============================================================ -->
+      <template x-if="topView === 'parametres' && activeSub.parametres === 'modes'">
+        <div class="space-y-6 max-w-xl">
+          <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Modes de paiement</h1>
+          <div class="bg-white rounded-xl border border-scolo-navy/10 divide-y divide-scolo-navy/5">
+            <template x-for="m in modesPaiement" :key="m.id">
+              <div class="flex items-center justify-between px-5 py-4">
+                <span class="text-sm font-medium" x-text="m.label"></span>
+                <button @click="m.actif = !m.actif" class="w-11 h-6 rounded-full transition-colors relative" :class="m.actif ? 'bg-scolo-gold' : 'bg-scolo-navy/15'">
+                  <span class="absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="m.actif ? 'translate-x-5' : 'translate-x-0.5'"></span>
+                </button>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+
+      <template x-if="topView === 'parametres' && activeSub.parametres === 'operateurs'">
+        <div class="space-y-6 max-w-xl">
+          <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Opérateurs Mobile Money</h1>
+          <div class="bg-white rounded-xl border border-scolo-navy/10 divide-y divide-scolo-navy/5">
+            <template x-for="op in operateursMM" :key="op.id">
+              <div class="flex items-center justify-between px-5 py-4">
+                <span class="text-sm font-medium" x-text="op.label"></span>
+                <button @click="op.actif = !op.actif" class="w-11 h-6 rounded-full transition-colors relative" :class="op.actif ? 'bg-scolo-gold' : 'bg-scolo-navy/15'">
+                  <span class="absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="op.actif ? 'translate-x-5' : 'translate-x-0.5'"></span>
+                </button>
+              </div>
+            </template>
+          </div>
+          <div class="flex gap-2">
+            <input type="text" x-model="newOperateur" placeholder="Ajouter un opérateur (ex. Telecel/Wizall)"
+                   class="flex-1 bg-white border border-scolo-navy/15 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-scolo-gold">
+            <button @click="addOperateur()" class="bg-scolo-navy text-scolo-cream font-heading font-medium text-sm px-4 py-2.5 rounded-lg">Ajouter</button>
+          </div>
+        </div>
+      </template>
+
+      <template x-if="topView === 'parametres' && activeSub.parametres === 'modeles'">
+        <div class="space-y-6">
+          <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Modèles de messages</h1>
+          <p class="text-sm text-scolo-dark/60">Ces modèles sont partagés avec l'onglet Relances → Modèles de messages.</p>
+          <button @click="activeSub.relances = 'modeles'; goTo('relances')" class="bg-scolo-navy text-scolo-cream font-heading font-medium text-sm px-5 py-2.5 rounded-lg">
+            Ouvrir l'éditeur de modèles
+          </button>
+        </div>
+      </template>
+
+      <template x-if="topView === 'parametres' && activeSub.parametres === 'config'">
+        <div class="space-y-6 max-w-xl">
+          <h1 class="font-heading text-2xl md:text-3xl font-bold text-scolo-navy">Configuration des échéances</h1>
+          <div class="bg-white rounded-xl border border-scolo-navy/10 p-6 space-y-5">
+            <div>
+              <label class="text-sm font-medium block mb-1.5">Nombre de tranches par défaut</label>
+              <input type="number" x-model.number="echeanceConfig.nbTranches" class="w-32 bg-white border border-scolo-navy/15 rounded-lg px-3 py-2 text-sm">
+            </div>
+            <div>
+              <p class="text-sm font-medium mb-2">Relances actives</p>
+              <div class="space-y-2">
+                <template x-for="stage in ['J-7','J-3','J']" :key="stage">
+                  <label class="flex items-center gap-2.5 text-sm">
+                    <input type="checkbox" x-model="echeanceConfig.relancesActives[stage]" class="w-4 h-4 accent-scolo-gold">
+                    <span x-text="'Relance ' + stage"></span>
+                  </label>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+    </main>
+  </div>
+
+  <!-- ===================== MODAL — REÇU ===================== -->
+  <div x-show="showReceiptModal" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+       class="fixed inset-0 z-50 bg-scolo-navy/50 backdrop-blur-sm flex items-center justify-center p-4" @click.self="showReceiptModal = false">
+    <div x-show="showReceiptModal" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+         id="receiptPrintArea" class="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 relative max-h-[90vh] overflow-y-auto">
+      <button @click="showReceiptModal = false" class="absolute top-5 right-5 text-scolo-dark/30 hover:text-scolo-dark print:hidden">✕</button>
+      <template x-if="currentReceipt">
+        <div class="space-y-6">
+          <div class="flex items-center gap-3">
+            <svg viewBox="0 0 40 40" class="w-9 h-9 shrink-0" fill="none"><circle cx="20" cy="20" r="18" stroke="#10213A" stroke-width="2"/><path d="M12 20.5L17 25.5L28 14.5" stroke="#10213A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><p class="font-heading font-bold text-scolo-navy leading-none">Scolo</p><p class="text-xs text-scolo-dark/50 mt-1">Reçu de paiement</p></div>
+          </div>
+          <div class="rounded-lg px-4 py-3" :class="currentReceipt.provisional ? 'bg-scolo-gold/15' : 'bg-success/10'">
+            <p class="text-xs font-semibold" :class="currentReceipt.provisional ? 'text-warn' : 'text-success'" x-text="currentReceipt.provisional ? 'Provisoire — en attente de confirmation' : 'Confirmé'"></p>
+            <p class="text-[11px] mt-0.5" :class="currentReceipt.provisional ? 'text-scolo-dark/60' : 'text-success/70'" x-text="currentReceipt.provisional ? 'Numéro définitif attribué à la synchronisation' : 'N° ' + currentReceipt.number"></p>
+          </div>
+          <div class="space-y-2.5 text-sm">
+            <div class="flex justify-between"><span class="text-scolo-dark/50">Élève</span><span class="font-medium" x-text="currentReceipt.studentName"></span></div>
+            <div class="flex justify-between"><span class="text-scolo-dark/50">Classe</span><span class="font-medium" x-text="currentReceipt.studentClass"></span></div>
+            <div class="flex justify-between"><span class="text-scolo-dark/50">Mode de paiement</span><span class="font-medium" x-text="currentReceipt.modeLabelDisplay"></span></div>
+            <template x-for="kv in currentReceipt.detailsList" :key="kv.label">
+              <div class="flex justify-between"><span class="text-scolo-dark/50" x-text="kv.label"></span><span class="font-medium tabular" x-text="kv.value"></span></div>
+            </template>
+            <div class="flex justify-between"><span class="text-scolo-dark/50">Émis par</span><span class="font-medium">Caissier — Guichet 1</span></div>
+            <div class="flex justify-between"><span class="text-scolo-dark/50">Horodatage</span><span class="font-medium tabular" x-text="currentReceipt.timestamp"></span></div>
+          </div>
+          <div class="bg-scolo-cream rounded-lg px-5 py-4 flex items-center justify-between">
+            <span class="font-heading font-semibold text-sm">Montant payé</span>
+            <span class="font-heading text-2xl font-bold text-scolo-navy tabular" x-text="formatCfa(currentReceipt.amount)"></span>
+          </div>
+          <div class="flex items-start gap-2 border-t border-scolo-navy/10 pt-4">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 mt-0.5 shrink-0 text-scolo-dark/30" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 118 0v3"/></svg>
+            <div><p class="text-[11px] text-scolo-dark/40">Signature d'intégrité (HMAC-SHA256)</p><p class="text-[11px] font-mono text-scolo-dark/50 break-all" x-text="currentReceipt.hash"></p></div>
+          </div>
+          <div class="flex gap-3 print:hidden">
+            <button @click="window.print()" class="flex-1 border border-scolo-navy/20 text-scolo-navy font-heading font-medium text-sm py-3 rounded-lg hover:bg-scolo-navy/5 transition-colors">Imprimer</button>
+            <button @click="pushToast('Reçu envoyé par WhatsApp au tuteur')" class="flex-1 bg-scolo-gold text-scolo-navy font-heading font-semibold text-sm py-3 rounded-lg hover:bg-scolo-gold-600 transition-colors">Envoyer par WhatsApp</button>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+</body>
+</html>
