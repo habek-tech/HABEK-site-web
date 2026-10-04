@@ -64,3 +64,6 @@ Ouvrir `index.html` directement fonctionne à peu près, mais certains navigateu
 
 ## Identité légale
 `site.config.json` contient `legalName`, `legalForm`, `capital`, `rccm`, `ifu`, `manager` : ils alimentent les mentions légales, le pied de page et les données structurées (schema.org). Modifier là, puis `node build.mjs`.
+
+## Image de partage de la page Scolo
+`assets/og-scolo.png` (1200×630) est générée depuis `brand/og/og-scolo.html` (commande dans le fichier). L'accueil et les autres pages utilisent `assets/og-image.png`.
