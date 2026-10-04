@@ -8,7 +8,7 @@
   Régénérer le PDF :
     "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new --disable-gpu --no-pdf-header-footer ^
       --print-to-pdf="assets\brochure-scolo.pdf" "file:///…/brand/brochure/brochure-scolo.html"
-  Contenu : aucun prix, aucun chiffre non fourni par le propriétaire.
+  Contenu : tarifs fournis par le propriétaire (essai sur site 15 000 FCFA, paliers selon le nombre d'élèves).
 -->
 <style>
   @font-face { font-family: 'Fraunces'; font-weight: 500 700; src: url('../../assets/fonts/fraunces-latin.woff2') format('woff2'); }
@@ -37,7 +37,7 @@
 
   .art { position: absolute; right: 40px; top: 118px; width: 210px; }
 
-  .features { position: absolute; left: 56px; right: 56px; top: 424px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .features { position: absolute; left: 56px; right: 56px; top: 398px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
   .feature { border-top: 2px solid var(--ocre); padding-top: 16px; }
   .num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: var(--indigo); color: var(--ocre); margin-bottom: 14px; }
   .num svg { width: 24px; height: 24px; }
@@ -45,7 +45,7 @@
   .feature p { font-size: 14px; line-height: 21px; }
   .feature .n { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--bronze); margin-bottom: 4px; }
 
-  .offer { position: absolute; left: 56px; right: 56px; top: 650px; background: #fff; border: 1px solid var(--sable); border-radius: 20px; padding: 26px 30px 24px; }
+  .offer { position: absolute; left: 56px; right: 56px; top: 606px; background: #fff; border: 1px solid var(--sable); border-radius: 20px; padding: 22px 30px 20px; }
   .offer .cap { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bronze); display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
   .offer .cap::before { content: ""; width: 20px; height: 2px; background: var(--ocre); }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
@@ -74,7 +74,7 @@
 
 <div class="top">
   <div class="brand"><img src="../../assets/icon.svg" alt=""><span>HABEK</span></div>
-  <span class="pill">Phase pilote</span>
+  <span class="pill">Disponible</span>
 </div>
 
 <div class="hero">
@@ -117,16 +117,16 @@
   <div class="cols">
     <div class="col">
       <span class="tag">Essai sur site</span>
-      <h3>Avec vos données réelles</h3>
-      <p>Installation avec les données de votre école, en 3 à 7 jours.</p>
+      <h3>15 000 FCFA</h3>
+      <p>3 jours dans votre école : migration de quelques classes et configuration de la base. Déduit du reste à payer si vous vous abonnez.</p>
     </div>
     <div class="col">
-      <span class="tag">Abonnement</span>
-      <h3>Selon l'effectif</h3>
-      <p>Paiement unique ou en 2 tranches, selon la taille de l'établissement.</p>
+      <span class="tag">Abonnement annuel</span>
+      <h3>Dès 200 000 FCFA / an</h3>
+      <p>Trois paliers selon le nombre d'élèves. Paiement en une fois (−20 %) ou en deux tranches.</p>
     </div>
   </div>
-  <p class="note">Tarifs communiqués sur demande, après un échange sur la taille de votre école.</p>
+  <p class="note">Par an. Jusqu'à 500 élèves : 200 000 FCFA en une fois, 250 000 en deux tranches. 500 à 900 : 360 000 / 450 000. 900 à 1 500 : 600 000 / 750 000. Au-delà : sur devis.</p>
 </div>
 
 <div class="cta"><strong>Demander l'essai sur site</strong><span>Écrivez-nous ou appelez-nous</span></div>

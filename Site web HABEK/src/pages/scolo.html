@@ -24,6 +24,29 @@ nav: scolo
 <meta name="twitter:title" content="Scolo — Suivi et recouvrement des frais de scolarité">
 <meta name="twitter:description" content="Suivez les paiements et relancez les parents par WhatsApp et SMS.">
 <meta name="twitter:image" content="{{site.shareOrigin}}/assets/og-image.png">
+<!--@head-end-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Scolo",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web (PWA)",
+  "inLanguage": "fr",
+  "url": "{{site.origin}}/scolo.html",
+  "description": "Gestion et recouvrement des frais de scolarité pour les écoles privées : suivi des paiements, relances par WhatsApp et SMS, tableaux de bord.",
+  "audience": { "@type": "Audience", "audienceType": "Écoles privées" },
+  "publisher": { "@type": "Organization", "name": "{{site.legalName}}", "url": "{{site.origin}}/" },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "XOF",
+    "lowPrice": "200000",
+    "highPrice": "750000",
+    "offerCount": "3",
+    "description": "Abonnement annuel selon le nombre d'élèves ; essai sur site à 15 000 FCFA."
+  }
+}
+</script>
 <!--@body-->
 <main id="top" tabindex="-1">
 
@@ -31,13 +54,13 @@ nav: scolo
     <div class="wrap hero-grid">
       <div class="hero-inner">
         <div class="hero-meta">
-          <span class="status-pill">Phase pilote</span>
+          <span class="status-pill">Disponible</span>
           <div class="caption">HABEK SOFTWARE · Scolo</div>
         </div>
         <h1 class="hero-title">Suivez les frais de scolarité et relancez les parents, sans cahier ni tableur.</h1>
         <p class="body-lg">Scolo est la plateforme de gestion et de recouvrement des frais de scolarité pour les écoles privées. Suivi des paiements, relances automatiques par WhatsApp et SMS, tableaux de bord pour la direction — pensée pour le rythme et les moyens de paiement réels des familles burkinabè.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#demo">Demander une démo</a>
+          <a class="btn btn-primary" href="#demo">Demander l'essai sur site</a>
           <a class="btn btn-ghost" href="#fonctionnement">Voir comment ça marche</a>
         </div>
         <div class="hero-links">
@@ -120,23 +143,40 @@ nav: scolo
   </section>
 
   <section id="offre" class="tinted">
-    <div class="wrap offer-grid">
-      <div>
-        <div class="section-head">
-          <div class="caption">Mise en place et offre</div>
-          <h2>Une offre qui suit la taille de votre école</h2>
-        </div>
-        <ul class="check-list">
-          <li>Installation prise en charge, sur place, à partir de vos fichiers existants.</li>
-          <li>Tarif adapté à l'effectif réel de votre établissement, sur devis.</li>
-          <li>Règlement en deux temps, ou en une seule fois avec une remise.</li>
-          <li>Rappels envoyés depuis le numéro WhatsApp Business de votre école.</li>
-        </ul>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="caption">Offre et tarifs</div>
+        <h2>Trois paliers selon le nombre d'élèves</h2>
       </div>
-      <div class="note-card">
-        <h3>Où en est Scolo ?</h3>
-        <p>Scolo est actuellement en <strong>phase pilote</strong>. Nous validons chaque fonction sur le terrain avant de l'élargir.</p>
-        <p>Écrivez-nous pour discuter de la mise en place dans votre école : nous préparons la démonstration selon sa taille.</p>
+      <div class="table-wrap">
+        <table class="price-table">
+          <caption class="sr-only">Tarifs annuels de Scolo selon le nombre d'élèves, en deux tranches ou en une fois</caption>
+          <thead>
+            <tr><th scope="col">Palier</th><th scope="col">Élèves</th><th scope="col">En deux tranches</th><th scope="col">En une fois</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Essentiel</th><td data-label="Élèves">Jusqu'à 500</td><td data-label="En deux tranches">250 000 FCFA / an</td><td data-label="En une fois">200 000 FCFA / an</td></tr>
+            <tr><th scope="row">Croissance</th><td data-label="Élèves">500 à 900</td><td data-label="En deux tranches">450 000 FCFA / an</td><td data-label="En une fois">360 000 FCFA / an</td></tr>
+            <tr><th scope="row">Excellence</th><td data-label="Élèves">900 à 1 500</td><td data-label="En deux tranches">750 000 FCFA / an</td><td data-label="En une fois">600 000 FCFA / an</td></tr>
+            <tr><th scope="row">Sur devis</th><td data-label="Élèves">Au-delà de 1 500</td><td data-label="En deux tranches">Selon devis</td><td data-label="En une fois">Selon devis</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="price-note">Abonnement annuel. Deux tranches : 60&nbsp;% à l'installation, 40&nbsp;% quelques mois après. Le paiement en une fois fait économiser 20&nbsp;%. Grands groupes et universités : contactez-nous, le devis se fait avec nous.</p>
+
+      <div class="offer-grid">
+        <div>
+          <ul class="check-list">
+            <li>Installation prise en charge, sur place, à partir de vos fichiers existants.</li>
+            <li>Rappels envoyés depuis le numéro WhatsApp Business de votre école.</li>
+            <li>Un tarif qui suit la taille réelle de votre établissement.</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <h3>Essai sur site : 15 000 FCFA</h3>
+          <p>Avant de vous engager, nous venons dans votre école pendant <strong>3 jours</strong> : nous migrons les données de quelques classes et configurons la base, pour que vous essayiez Scolo avec vos vraies données.</p>
+          <p>Si vous vous abonnez, les 15 000 FCFA sont <strong>déduits du reste à payer</strong>, et nous migrons ensuite toutes les données de l'école.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -160,11 +200,11 @@ nav: scolo
         </details>
         <details class="faq-item">
           <summary>Combien coûte Scolo ?</summary>
-          <p>Le tarif s'adapte à l'effectif réel de votre école ; nous établissons un devis précis sur demande. Le règlement peut se faire en deux temps, ou en une seule fois avec une remise.</p>
+          <p>Abonnement annuel, en trois paliers selon le nombre d'élèves : par exemple 200 000 FCFA par an en une fois jusqu'à 500 élèves, ou 250 000 FCFA par an en deux tranches. Voir le <a href="#offre">tableau des tarifs</a>. Au-delà de 1 500 élèves, le tarif est établi sur devis.</p>
         </details>
         <details class="faq-item">
-          <summary>Scolo est-il déjà disponible ?</summary>
-          <p>Scolo est actuellement en phase pilote. Contactez-nous pour discuter de la mise en place dans votre école.</p>
+          <summary>Peut-on essayer Scolo avant de s'abonner ?</summary>
+          <p>Oui, avec l'essai sur site à 15 000 FCFA : pendant 3 jours, nous migrons les données de quelques classes et configurons la base dans votre école. Si vous vous abonnez, ce montant est déduit du reste à payer.</p>
         </details>
         <details class="faq-item">
           <summary>Que deviennent les données de nos élèves ?</summary>
@@ -177,17 +217,17 @@ nav: scolo
   <section class="contact-band demo" id="demo">
     <div class="wrap demo-grid">
       <div class="demo-intro">
-        <h2>Demander une démonstration</h2>
-        <p class="body-lg">Dites-nous quelques mots sur votre école. Votre message s'ouvre dans WhatsApp, prêt à envoyer : nous préparons la démonstration selon la taille de l'établissement.</p>
+        <h2>Demander l'essai sur site ou une démonstration</h2>
+        <p class="body-lg">Dites-nous quelques mots sur votre école. Votre message s'ouvre dans WhatsApp, prêt à envoyer : nous préparons l'essai ou la démonstration selon la taille de l'établissement.</p>
         <ul class="demo-points">
           <li>Vous relisez le message avant de l'envoyer.</li>
           <li>Ce site n'enregistre aucune de ces informations.</li>
-          <li>Aucun prix affiché : le tarif suit l'effectif de votre école.</li>
+          <li>Les tarifs sont détaillés plus haut : trois paliers selon le nombre d'élèves.</li>
         </ul>
         <p class="contact-detail">Vous préférez nous joindre autrement ? <a class="tel" href="tel:{{site.phoneTel}}">{{site.phoneDisplay}}</a> · <a class="tel" href="mailto:{{site.email}}">{{site.email}}</a></p>
       </div>
 
-      <form class="demo-form" id="demoForm" data-wa="{{site.whatsapp}}" data-event="demo_request" data-intro="Bonjour, je souhaite une démonstration de Scolo pour mon école." action="#demo">
+      <form class="demo-form" id="demoForm" data-wa="{{site.whatsapp}}" data-event="demo_request" data-intro="Bonjour, je souhaite l'essai sur site ou une démonstration de Scolo pour mon école." action="#demo">
         <div class="field">
           <label for="ecole">Nom de l'école <span class="hint">(obligatoire)</span></label>
           <input type="text" id="ecole" data-label="École" name="ecole" required maxlength="100" autocomplete="organization">
@@ -201,10 +241,10 @@ nav: scolo
             <label for="effectif">Effectif approximatif</label>
             <select id="effectif" name="effectif" data-label="Effectif">
               <option value="">Je ne sais pas / à préciser</option>
-              <option>Moins de 300 élèves</option>
-              <option>300 à 700 élèves</option>
-              <option>700 à 1500 élèves</option>
-              <option>Plus de 1500 élèves</option>
+              <option>Jusqu'à 500 élèves</option>
+              <option>500 à 900 élèves</option>
+              <option>900 à 1 500 élèves</option>
+              <option>Plus de 1 500 élèves</option>
             </select>
           </div>
         </div>

@@ -61,3 +61,6 @@ Ouvrir `index.html` directement fonctionne à peu près, mais certains navigateu
 
 ## Pages produit
 `scolo.html` (Scolo, en phase pilote) et `immo-suite.html` (Immo Suite, **en développement** : pas de démo ni de prix). Le lien vers l'application Scolo est `scoloApp` dans `site.config.json`. Les formulaires (`form[data-wa]`) sont gérés par `assets/demo.js` : `data-intro` = première ligne du message WhatsApp, `data-label` sur un champ = libellé de la ligne ; `data-event` = évènement d'analytics.
+
+## Identité légale
+`site.config.json` contient `legalName`, `legalForm`, `capital`, `rccm`, `ifu`, `manager` : ils alimentent les mentions légales, le pied de page et les données structurées (schema.org). Modifier là, puis `node build.mjs`.

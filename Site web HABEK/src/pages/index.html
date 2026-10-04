@@ -29,19 +29,38 @@ shots: lazy
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "HABEK Technology Company",
+  "legalName": "{{site.legalName}}",
   "alternateName": "HABEK",
   "description": "Logiciels métier et logiciels sur mesure pour les entreprises et institutions du Burkina Faso.",
   "url": "{{site.origin}}/",
   "logo": "{{site.origin}}/assets/icon.png",
   "email": "{{site.email}}",
   "telephone": "{{site.phoneTel}}",
+  "taxID": "{{site.ifu}}",
+  "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": "RCCM",
+    "value": "{{site.rccm}}"
+  },
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Ouagadougou",
     "addressCountry": "BF"
   },
   "areaServed": "BF",
-  "knowsLanguage": "fr"
+  "knowsLanguage": "fr",
+  "sameAs": ["{{site.facebook}}"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": "{{site.email}}",
+    "telephone": "{{site.phoneTel}}",
+    "availableLanguage": "fr"
+  },
+  "makesOffer": {
+    "@type": "Offer",
+    "itemOffered": { "@type": "SoftwareApplication", "name": "Scolo", "url": "{{site.origin}}/scolo.html" }
+  }
 }
 </script>
 <!--@body-->
@@ -108,7 +127,7 @@ shots: lazy
 
       <div class="solution-card">
         <div class="solution-card-text">
-          <span class="status-pill">Phase pilote</span>
+          <span class="status-pill">Disponible</span>
           <h3>Scolo</h3>
           <p>La plateforme de gestion et de recouvrement des frais de scolarité pour les écoles privées. Suivi des paiements, relances automatiques par WhatsApp et SMS, tableaux de bord pour la direction — pensée pour le rythme et les moyens de paiement réels des familles burkinabè.</p>
           <div>
@@ -140,43 +159,7 @@ shots: lazy
 
   {{proof}}
 
-  <section id="approche" class="tinted">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="caption">Notre approche</div>
-        <h2>Comment on travaille</h2>
-        <p>Pour Scolo, notre première solution, voici comment nous intervenons.</p>
-      </div>
-      <div class="approche-grid">
-        <div class="approche-item">
-          <svg class="approche-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M8 34V16L20 7l12 9v18" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 34V22h8v12" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <h3>Installation prise en charge</h3>
-          <p>Nous migrons vos listes d'élèves et de classes sur place, depuis vos fichiers existants. Vous n'avez rien à ressaisir.</p>
-        </div>
-        <div class="approche-item">
-          <svg class="approche-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6">
-            <rect x="7" y="6" width="26" height="26" rx="6" stroke-linejoin="round"/>
-            <path d="M14 18h12M14 24h8" stroke-linecap="round"/>
-          </svg>
-          <h3>Les rappels partent de votre numéro</h3>
-          <p>Chaque école connecte son propre numéro WhatsApp Business : les parents reçoivent les relances directement de l'école.</p>
-        </div>
-        <div class="approche-item">
-          <svg class="approche-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M6 30h6V18H6v12zM17 30h6V10h-6v20zM28 30h6V22h-6v8z" stroke-linejoin="round"/>
-          </svg>
-          <h3>Une offre qui suit la taille de votre école</h3>
-          <p>Le tarif suit l'effectif réel de votre établissement, avec un règlement en une ou plusieurs fois.</p>
-        </div>
-      </div>
-      <p class="section-more"><a href="{{root}}scolo.html#fonctionnement">Voir le détail du fonctionnement de Scolo →</a></p>
-    </div>
-  </section>
-
-  <section id="sur-mesure">
+  <section id="sur-mesure" class="tinted">
     <div class="wrap custom-grid">
       <div>
         <div class="section-head">

@@ -5,7 +5,7 @@
   "phoneTel": "+22671598288",
   "phoneDisplay": "+226 71 59 82 88",
   "email": "support@habek.cc",
-  "facebook": "https://www.facebook.com/share/1EZ521NkNx/",
+  "facebook": "https://www.facebook.com/people/HABEK-Technology/61594365947703/",
   "proof": {
     "enabled": false,
     "consent": false,
@@ -20,5 +20,11 @@
     "provider": "vercel",
     "enabled": true
   },
-  "scoloApp": "https://scolo-rho.vercel.app/"
+  "scoloApp": "https://scolo-rho.vercel.app/",
+  "legalName": "HABEK Technology Company",
+  "legalForm": "SARL",
+  "capital": "1 000 000 FCFA",
+  "rccm": "BF-OUA-01-2024-A10-13592",
+  "ifu": "00247251E",
+  "manager": "Hassan BANDE, gérant"
 }
