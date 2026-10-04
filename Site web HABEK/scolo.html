@@ -41,6 +41,7 @@
     </a>
     <nav class="links" aria-label="Navigation principale">
       <a class="nav-link" href="scolo.html" aria-current="page">Scolo</a>
+      <a class="nav-link" href="immo-suite.html">Immo Suite</a>
       <a class="nav-link" href="index.html#approche">Notre approche</a>
       <a class="nav-link" href="index.html#sur-mesure">Sur mesure</a>
       <a class="nav-link" href="index.html#contact">Contact</a>
@@ -52,6 +53,7 @@
   </div>
   <nav class="wrap mobile-panel" id="mobilePanel" aria-label="Navigation mobile">
     <a href="scolo.html" aria-current="page">Scolo</a>
+    <a href="immo-suite.html">Immo Suite</a>
     <a href="index.html#approche">Notre approche</a>
     <a href="index.html#sur-mesure">Sur mesure</a>
     <a href="index.html#contact">Contact</a>
@@ -83,7 +85,7 @@
           <a class="btn btn-ghost" href="#fonctionnement">Voir comment ça marche</a>
         </div>
         <div class="hero-links">
-          <a class="hero-link" href="https://scolo.habek.cc" rel="noopener">Accéder à l'application Scolo →</a>
+          <a class="hero-link" href="https://scolo-rho.vercel.app/" rel="noopener">Accéder à l'application Scolo →</a>
           <a class="hero-link" href="#essayer">Essayer la démo interactive →</a>
           <a class="hero-link" href="assets/brochure-scolo.pdf" download="HABEK-Scolo-brochure.pdf" type="application/pdf">Télécharger la brochure (PDF)</a>
         </div>
@@ -235,19 +237,19 @@
         <p class="contact-detail">Vous préférez nous joindre autrement ? <a class="tel" href="tel:+22671598288">+226 71 59 82 88</a> · <a class="tel" href="mailto:support@habek.cc">support@habek.cc</a></p>
       </div>
 
-      <form class="demo-form" id="demoForm" data-wa="22671598288" action="#demo">
+      <form class="demo-form" id="demoForm" data-wa="22671598288" data-event="demo_request" data-intro="Bonjour, je souhaite une démonstration de Scolo pour mon école." action="#demo">
         <div class="field">
           <label for="ecole">Nom de l'école <span class="hint">(obligatoire)</span></label>
-          <input type="text" id="ecole" name="ecole" required maxlength="100" autocomplete="organization">
+          <input type="text" id="ecole" data-label="École" name="ecole" required maxlength="100" autocomplete="organization">
         </div>
         <div class="field-row">
           <div class="field">
             <label for="ville">Ville <span class="hint">(obligatoire)</span></label>
-            <input type="text" id="ville" name="ville" required maxlength="60" autocomplete="address-level2">
+            <input type="text" id="ville" data-label="Ville" name="ville" required maxlength="60" autocomplete="address-level2">
           </div>
           <div class="field">
             <label for="effectif">Effectif approximatif</label>
-            <select id="effectif" name="effectif">
+            <select id="effectif" name="effectif" data-label="Effectif">
               <option value="">Je ne sais pas / à préciser</option>
               <option>Moins de 300 élèves</option>
               <option>300 à 700 élèves</option>
@@ -259,7 +261,7 @@
         <fieldset class="field">
           <legend>Niveaux d'enseignement <span class="hint">(plusieurs choix possibles)</span></legend>
           <div class="choices">
-            <label class="choice"><input type="checkbox" name="niveau" value="Maternelle"> Maternelle</label>
+            <label class="choice"><input type="checkbox" name="niveau" value="Maternelle" data-label="Niveaux"> Maternelle</label>
             <label class="choice"><input type="checkbox" name="niveau" value="Primaire"> Primaire</label>
             <label class="choice"><input type="checkbox" name="niveau" value="Collège"> Collège</label>
             <label class="choice"><input type="checkbox" name="niveau" value="Lycée"> Lycée</label>
@@ -268,12 +270,12 @@
         </fieldset>
         <div class="field">
           <label for="nom">Votre nom et votre fonction</label>
-          <input type="text" id="nom" name="nom" maxlength="80" autocomplete="name">
+          <input type="text" id="nom" data-label="Contact" name="nom" maxlength="80" autocomplete="name">
         </div>
         <fieldset class="field">
           <legend>Comment souhaitez-vous être contacté ?</legend>
           <div class="choices">
-            <label class="choice"><input type="radio" name="contact" value="Par message WhatsApp" checked> Par WhatsApp</label>
+            <label class="choice"><input type="radio" name="contact" value="Par message WhatsApp" data-label="Préférence" checked> Par WhatsApp</label>
             <label class="choice"><input type="radio" name="contact" value="Par appel téléphonique"> Par appel</label>
           </div>
         </fieldset>

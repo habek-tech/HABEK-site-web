@@ -102,6 +102,7 @@ for (const p of pages) {
     home,
     logo_href: home === '' ? '#top' : home,
     cur_scolo: meta.nav === 'scolo' ? ' aria-current="page"' : '',
+    cur_immo: meta.nav === 'immo' ? ' aria-current="page"' : '',
     year,
     shots_loading: meta.shots === 'lazy' ? 'loading="lazy"' : 'fetchpriority="high"',
   };

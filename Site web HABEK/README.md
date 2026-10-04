@@ -58,3 +58,6 @@ Page autonome issue du prototype de l'application Scolo, avec **données fictive
 
 ## Prévisualiser en local
 Ouvrir `index.html` directement fonctionne à peu près, mais certains navigateurs bloquent les polices en `file://`. Pour un aperçu fidèle : `python -m http.server 8000` dans ce dossier, puis http://localhost:8000.
+
+## Pages produit
+`scolo.html` (Scolo, en phase pilote) et `immo-suite.html` (Immo Suite, **en développement** : pas de démo ni de prix). Le lien vers l'application Scolo est `scoloApp` dans `site.config.json`. Les formulaires (`form[data-wa]`) sont gérés par `assets/demo.js` : `data-intro` = première ligne du message WhatsApp, `data-label` sur un champ = libellé de la ligne ; `data-event` = évènement d'analytics.

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Immo Suite — Gestion locative et suivi des loyers — HABEK</title>
+<meta name="description" content="Immo Suite, en développement : suivi des loyers, relances automatiques par WhatsApp, quittances PDF et tableau de bord des impayés pour les agences immobilières et propriétaires du Burkina Faso.">
+<meta name="theme-color" content="#fbf7f0">
+<link rel="canonical" href="https://habek.cc/immo-suite.html">
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HABEK">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Immo Suite — Gestion locative et suivi des loyers">
+<meta property="og:description" content="En développement : suivez les loyers, relancez les locataires par WhatsApp, générez les quittances et pilotez les impayés, même sans connexion.">
+<meta property="og:url" content="https://habek.vercel.app/immo-suite.html">
+<meta property="og:image" content="https://habek.vercel.app/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HABEK — Logiciels métier pour le Burkina Faso">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Immo Suite — Gestion locative et suivi des loyers">
+<meta name="twitter:description" content="En développement : loyers, relances WhatsApp, quittances et impayés, même sans connexion.">
+<meta name="twitter:image" content="https://habek.vercel.app/assets/og-image.png">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#top">Aller au contenu</a>
+
+<header>
+  <div class="wrap nav-row">
+    <a href="index.html" class="logo">
+      <img src="assets/icon.svg" alt="HABEK" width="37" height="34">
+      <span>HABEK</span>
+    </a>
+    <nav class="links" aria-label="Navigation principale">
+      <a class="nav-link" href="scolo.html">Scolo</a>
+      <a class="nav-link" href="immo-suite.html" aria-current="page">Immo Suite</a>
+      <a class="nav-link" href="index.html#approche">Notre approche</a>
+      <a class="nav-link" href="index.html#sur-mesure">Sur mesure</a>
+      <a class="nav-link" href="index.html#contact">Contact</a>
+      <a class="btn btn-ghost" href="index.html#contact">Nous contacter</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobilePanel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="wrap mobile-panel" id="mobilePanel" aria-label="Navigation mobile">
+    <a href="scolo.html">Scolo</a>
+    <a href="immo-suite.html" aria-current="page">Immo Suite</a>
+    <a href="index.html#approche">Notre approche</a>
+    <a href="index.html#sur-mesure">Sur mesure</a>
+    <a href="index.html#contact">Contact</a>
+    <a class="btn btn-ghost" href="index.html#contact">Nous contacter</a>
+    <div class="mobile-social">
+      <a href="https://wa.me/22671598288" aria-label="WhatsApp" title="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z" stroke-linejoin="round"/><path d="M8.5 8.8c.2-.5.5-.5.8-.5h.6c.2 0 .4 0 .6.4s.7 1.7.7 1.9.1.3 0 .5-.2.3-.4.5-.4.4-.2.7c.3.5.7 1 1.3 1.5s1.1.7 1.6.9c.2.1.4.1.6-.1s.7-.8.9-1 .4-.2.6-.1l1.7.8c.2.1.4.2.4.4s0 .9-.3 1.3-1.2.9-1.9.9-2.3-.3-3.9-1.8-2.4-3-2.6-3.5-.2-.9 0-1.4Z" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://www.facebook.com/share/1EZ521NkNx/" aria-label="Facebook" title="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M13.5 21v-6.5h2.2l.3-2.6h-2.5v-1.6c0-.7.2-1.2 1.3-1.2h1.3V6.7c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.1-3.2 3.3v1.9H8.7v2.6h2.3V21" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main id="top" tabindex="-1">
+
+  <section class="hero product-hero">
+    <div class="wrap hero-grid">
+      <div class="hero-inner">
+        <div class="hero-meta">
+          <span class="status-pill status-pill--dev">En développement</span>
+          <div class="caption">HABEK SOFTWARE · Immo Suite</div>
+        </div>
+        <h1 class="hero-title">Suivez les loyers et relancez les locataires, depuis le terrain.</h1>
+        <p class="body-lg">Immo Suite est une application de gestion locative pour les agences immobilières et les propriétaires qui gèrent plusieurs biens au Burkina Faso. Suivi des loyers, relances automatiques par WhatsApp, quittances en PDF, tableau de bord des impayés — conçue pour fonctionner même sans connexion.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#echanger">Échanger avec nous</a>
+          <a class="btn btn-ghost" href="#fonctionnement">Voir comment ça marche</a>
+        </div>
+      </div>
+      <div class="product-visual">
+        <figure class="immo-shots">
+  <div class="immo-stage">
+    <div class="immo-phone"><img src="assets/shots/immo-suite-tableau-de-bord.webp" width="390" height="780" fetchpriority="high" alt="Immo Suite : tableau de bord avec retards, échéances proches, taux de recouvrement et impayés prioritaires"></div>
+    <div class="immo-phone"><img src="assets/shots/immo-suite-echeances.webp" width="390" height="780" loading="lazy" alt="Immo Suite : liste des encaissements du jour avec statuts en retard, à payer et payé"></div>
+  </div>
+  <figcaption class="visual-caption">Aperçu du prototype — données fictives</figcaption>
+</figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="probleme" class="tinted">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="caption">Le constat</div>
+        <h2>Quand les loyers se suivent sur cahier, tout repose sur la mémoire</h2>
+      </div>
+      <div class="approche-grid problem-grid">
+        <div class="approche-item">
+          <h3>Un suivi qui dépend de la mémoire</h3>
+          <p>Savoir qui doit payer, combien et depuis quand demande du temps quand l'information est dispersée dans des carnets.</p>
+        </div>
+        <div class="approche-item">
+          <h3>Des relances sans trace</h3>
+          <p>Un appel ou un message informel ne laisse pas d'historique : difficile de prouver qui a été relancé, quand et comment.</p>
+        </div>
+        <div class="approche-item">
+          <h3>Des quittances écrites à la main</h3>
+          <p>Une quittance manuscrite prend du temps, et elle est difficile à retrouver plus tard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fonctionnement">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="caption">Comment ça marche</div>
+        <h2>De la saisie au pilotage, en quatre étapes</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h4>Tout au même endroit</h4>
+          <p>Biens, locataires et baux sont saisis une seule fois et réutilisés partout, sans ressaisie.</p>
+        </li>
+        <li>
+          <h4>Encaisser depuis le téléphone</h4>
+          <p>L'agent enregistre un paiement sur place. Sans réseau, il est gardé sur le téléphone puis synchronisé dès que la connexion revient.</p>
+        </li>
+        <li>
+          <h4>Relances automatiques</h4>
+          <p>Les locataires reçoivent un rappel par WhatsApp, avec un repli par SMS. Chaque relance est historisée : date, canal, statut.</p>
+        </li>
+        <li>
+          <h4>Quittances et pilotage</h4>
+          <p>Une quittance PDF est générée à chaque encaissement. Le responsable voit d'un coup d'œil les retards, les paiements à venir et ce qui est à jour.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="pour-qui" class="tinted">
+    <div class="wrap offer-grid">
+      <div>
+        <div class="section-head">
+          <div class="caption">Pour qui</div>
+          <h2>Pensée pour ceux qui gèrent plusieurs biens</h2>
+        </div>
+        <ul class="check-list">
+          <li>Agences immobilières et gestionnaires locatifs.</li>
+          <li>Syndics et propriétaires qui gèrent dix biens ou plus.</li>
+          <li>Agents de terrain : tout se fait depuis le téléphone, avec peu de formation.</li>
+          <li>Responsables d'agence : une vue claire sur les loyers en retard.</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h3>Où en est Immo Suite ?</h3>
+        <p>Immo Suite est <strong>en cours de développement</strong> : elle n'est pas encore disponible.</p>
+        <p>Vous gérez des biens en location ? Écrivez-nous : vos besoins nous aident à construire un outil adapté au quotidien des agences. Immo Suite ne remplace pas votre comptabilité : c'est un outil de suivi des loyers, des relances et des quittances.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap faq-layout">
+      <div class="section-head">
+        <div class="caption">FAQ</div>
+        <h2>Questions sur Immo Suite</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Immo Suite est-elle déjà disponible ?</summary>
+          <p>Pas encore. L'application est en cours de développement. Contactez-nous pour échanger sur vos besoins et être informé de son avancement.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Faut-il une connexion internet en permanence ?</summary>
+          <p>Non. Immo Suite est conçue pour fonctionner hors connexion : les paiements saisis sur le terrain restent sur le téléphone, puis sont synchronisés dès que le réseau revient.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Les locataires doivent-ils installer quelque chose ?</summary>
+          <p>Non. Ils n'ont pas de compte à créer : ils reçoivent leurs rappels par WhatsApp (avec un repli par SMS) et leurs quittances.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Immo Suite remplace-t-elle ma comptabilité ?</summary>
+          <p>Non. C'est un outil de suivi des loyers, des relances et des quittances. Il ne remplace pas votre logiciel comptable.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Combien coûtera Immo Suite ?</summary>
+          <p>Le tarif n'est pas encore fixé. Il devrait dépendre du nombre de biens gérés : contactez-nous pour en discuter.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-band demo" id="echanger">
+    <div class="wrap demo-grid">
+      <div class="demo-intro">
+        <h2>Échanger avec nous</h2>
+        <p class="body-lg">Dites-nous quelques mots sur votre activité. Votre message s'ouvre dans WhatsApp, prêt à envoyer : nous vous recontactons pour échanger sur vos besoins.</p>
+        <ul class="demo-points">
+          <li>Vous relisez le message avant de l'envoyer.</li>
+          <li>Ce site n'enregistre aucune de ces informations.</li>
+          <li>Immo Suite n'est pas encore disponible : il s'agit d'un premier échange.</li>
+        </ul>
+        <p class="contact-detail">Vous préférez nous joindre autrement ? <a class="tel" href="tel:+22671598288">+226 71 59 82 88</a> · <a class="tel" href="mailto:support@habek.cc">support@habek.cc</a></p>
+      </div>
+
+      <form class="demo-form" id="immoForm" data-wa="22671598288" data-event="immo_contact_request" data-intro="Bonjour, je souhaite en savoir plus sur Immo Suite pour mon activité de gestion locative." action="#echanger">
+        <div class="field">
+          <label for="structure">Nom de votre agence ou structure <span class="hint">(obligatoire)</span></label>
+          <input type="text" id="structure" name="structure" data-label="Structure" required maxlength="100" autocomplete="organization">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="ville">Ville <span class="hint">(obligatoire)</span></label>
+            <input type="text" id="ville" name="ville" data-label="Ville" required maxlength="60" autocomplete="address-level2">
+          </div>
+          <div class="field">
+            <label for="biens">Nombre de biens gérés</label>
+            <select id="biens" name="biens" data-label="Biens gérés">
+              <option value="">Je ne sais pas / à préciser</option>
+              <option>Moins de 10 biens</option>
+              <option>10 à 30 biens</option>
+              <option>30 à 100 biens</option>
+              <option>Plus de 100 biens</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend>Votre activité <span class="hint">(plusieurs choix possibles)</span></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="activite" value="Agence immobilière" data-label="Activité"> Agence immobilière</label>
+            <label class="choice"><input type="checkbox" name="activite" value="Syndic / gestion locative"> Syndic / gestion locative</label>
+            <label class="choice"><input type="checkbox" name="activite" value="Propriétaire"> Propriétaire</label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="nom">Votre nom et votre fonction</label>
+          <input type="text" id="nom" name="nom" data-label="Contact" maxlength="80" autocomplete="name">
+        </div>
+        <fieldset class="field">
+          <legend>Comment souhaitez-vous être contacté ?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="contact" value="Par message WhatsApp" data-label="Préférence" checked> Par WhatsApp</label>
+            <label class="choice"><input type="radio" name="contact" value="Par appel téléphonique"> Par appel</label>
+          </div>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Ouvrir WhatsApp avec ma demande</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+        <p class="form-note">Rien n'est envoyé tant que vous n'avez pas appuyé sur « Envoyer » dans WhatsApp.</p>
+        <noscript><p class="form-note">JavaScript est désactivé : écrivez-nous directement sur <a href="https://wa.me/22671598288">WhatsApp</a>.</p></noscript>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-logo">
+      <img src="assets/icon.svg" alt="" width="30" height="28">
+      <span>HABEK</span>
+    </div>
+    <div class="footer-social">
+      <a href="https://wa.me/22671598288" aria-label="WhatsApp" title="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://www.facebook.com/share/1EZ521NkNx/" aria-label="Facebook" title="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M13.5 21v-6.5h2.2l.3-2.6h-2.5v-1.6c0-.7.2-1.2 1.3-1.2h1.3V6.7c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.1-3.2 3.3v1.9H8.7v2.6h2.3V21" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    <div class="footer-meta">
+      <nav class="footer-legal" aria-label="Informations légales">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+      </nav>
+      <div class="footer-copy">© 2026 HABEK Technology Company — Ouagadougou, Burkina Faso</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+<script src="assets/track.js" defer></script>
+<script src="assets/demo.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+
+</body>
+</html>

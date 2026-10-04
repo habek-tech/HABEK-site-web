@@ -13,9 +13,10 @@
     else if(href.indexOf('tel:') === 0) send('call_click');
     else if(href.indexOf('mailto:') === 0) send('email_click');
     else if(/\.pdf(\?|$)/.test(href)) send('brochure_download');
-    else if(href.indexOf('scolo.habek.cc') > -1) send('scolo_app_click');
+    else if(/scolo-rho\.vercel\.app|scolo\.habek\.cc/.test(href)) send('scolo_app_click');
   });
   document.addEventListener('submit', function(e){
-    if(e.target && e.target.id === 'demoForm') send('demo_request');
+    var ev = e.target && e.target.getAttribute ? e.target.getAttribute('data-event') : null;
+    if(ev) send(ev);
   });
 })();

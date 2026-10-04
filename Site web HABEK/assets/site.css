@@ -129,11 +129,11 @@
   .mobile-panel a.btn { align-self: flex-start; }
   .mobile-social { display: flex; gap: var(--space-3); margin-top: var(--space-2); }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1040px) {
     nav.links { display: none; }
     .menu-toggle { display: flex; }
   }
-  @media (min-width: 901px) {
+  @media (min-width: 1041px) {
     .mobile-panel { display: none !important; }
   }
 
@@ -491,3 +491,14 @@
   .shots-phone { position: absolute; right: -6px; bottom: 0; width: 30%; border-radius: 16px; overflow: hidden; border: 4px solid var(--indigo-clair); background: #10213a; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); }
   .shots-phone img { display: block; width: 100%; height: auto; }
   .scolo-shots .visual-caption { margin-top: var(--space-1); }
+
+  /* ===== Immo Suite : pastille « en développement » et captures du prototype ===== */
+  .status-pill--dev { background: var(--accent-ocre); color: var(--brand-indigo); }
+  .solution-card + .solution-card { margin-top: var(--space-4); }
+  @media (min-width: 721px) { .solution-card--rev { flex-direction: row-reverse; } }
+  .immo-shots { margin: 0 auto; max-width: 400px; }
+  .immo-stage { display: flex; justify-content: center; align-items: flex-start; padding: 4px 0 var(--space-2); }
+  .immo-phone { width: 44%; border-radius: 22px; overflow: hidden; border: 4px solid var(--indigo-clair); background: #16333a; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); }
+  .immo-phone img { display: block; width: 100%; height: auto; }
+  .immo-phone + .immo-phone { margin-left: -6%; margin-top: 36px; }
+  .immo-shots .visual-caption { margin-top: var(--space-1); }

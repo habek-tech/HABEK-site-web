@@ -19,5 +19,6 @@
   "analytics": {
     "provider": "vercel",
     "enabled": true
-  }
+  },
+  "scoloApp": "https://scolo-rho.vercel.app/"
 }
